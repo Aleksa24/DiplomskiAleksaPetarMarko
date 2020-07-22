@@ -3,13 +3,14 @@ package com.example.app.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 @Table(name = "user")
 @Entity
 @Data
-public class User {
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,12 +38,12 @@ public class User {
     @Column(name = "phone")
     private String phone;
 
-    @ManyToOne
+    @ManyToOne // TODO
     @JoinColumn(name = "user_type_id")
     private UserType userType;
 
-    @Column(name = "is_account_no_expired")
-    private Boolean isAccountNoExpired;
+    @Column(name = "is_account_non_expired")
+    private Boolean isAccountNonExpired;
 
     @Column(name = "is_credentials_non_expired")
     private Boolean isCredentialsNonExpired;
@@ -52,6 +53,9 @@ public class User {
 
     @Column(name = "is_account_non_locked")
     private Boolean isAccountNonLocked;
+
+    private String[] roles;
+    private String[] permissions;
 
     @ManyToMany
     @JoinTable(
