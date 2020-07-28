@@ -1,6 +1,6 @@
 package com.example.app.dto;
 
-import com.example.app.validator.EmailNotTaken;
+import com.example.app.validator.user.email.EmailNotTaken;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

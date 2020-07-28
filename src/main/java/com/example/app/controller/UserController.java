@@ -1,6 +1,8 @@
 package com.example.app.controller;
 
+import com.example.app.constants.Constants;
 import com.example.app.dto.UserDto;
+import com.example.app.exception.user.UserNotFoundException;
 import com.example.app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -20,23 +22,19 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public UserDto getById(@PathVariable("id") @Validated Long id) {
-        UserDto userDto = userService.findById(id);
-        System.out.println("UserDto found:" + userDto);
-        return userDto;
+    public UserDto findById(@PathVariable("id") @Validated Long id) {
+        return userService.findById(id).orElseThrow(() ->
+                new UserNotFoundException(String.format(Constants.USER_NOT_FOUND_BY_ID, id)));
     }
 
-    @PostMapping("/add")
-    public UserDto add(@RequestBody @Validated UserDto userDto){
-        UserDto savedUserDto = userService.save(userDto);
-        System.out.println("Saved userDto:" + userDto);
-        return savedUserDto;
+    @PostMapping("/save")
+    public UserDto save(@Validated @RequestBody UserDto userDto) {
+        return userService.save(userDto);
+
     }
 
     @GetMapping("/all")
-    public List<UserDto> getAll(){
+    public List<UserDto> findAll() {
         return userService.findAll();
     }
-
-
 }
