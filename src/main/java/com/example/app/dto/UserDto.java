@@ -1,7 +1,5 @@
 package com.example.app.dto;
 
-import com.example.app.entity.Post;
-import com.example.app.entity.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,10 +20,10 @@ public class UserDto {
     private Date dateCreated;
     private String email;
     private String phone;
-    private Boolean isAccountNonExpired;
-    private Boolean isCredentialsNonExpired;
-    private Boolean isEnabled;
-    private Boolean isAccountNonLocked;
-    private UserRole role;
-    private List<Post> favorites;
+    private boolean isAccountNonExpired;
+    private boolean isCredentialsNonExpired;
+    private boolean isEnabled;
+    private boolean isAccountNonLocked;
+    private UserRoleDto role;
+    private List<PostDto> favorites;
 }

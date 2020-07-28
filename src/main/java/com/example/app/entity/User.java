@@ -39,16 +39,16 @@ public class User implements Serializable {
     private String phone;
 
     @Column(name = "is_account_non_expired")
-    private Boolean isAccountNonExpired;
+    private boolean isAccountNonExpired;
 
     @Column(name = "is_credentials_non_expired")
-    private Boolean isCredentialsNonExpired;
+    private boolean isCredentialsNonExpired;
 
     @Column(name = "is_enabled")
-    private Boolean isEnabled;
+    private boolean isEnabled;
 
     @Column(name = "is_account_non_locked")
-    private Boolean isAccountNonLocked;
+    private boolean isAccountNonLocked;
 
     @ManyToOne
     @JoinColumn(name = "user_role_id")
