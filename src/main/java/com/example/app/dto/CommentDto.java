@@ -16,11 +16,10 @@ public class CommentDto {
     private String text;
     private Date dateCreated;
     private Date dateLastModified;
-    private UserDto user;
+    private UserShortDto user;
     private CommentStatusDto commentStatus;
     private List<LikeDto> likes;
     private List<AttachmentDto> attachments;
     private List<CommentDto> comments;
-
 
 }

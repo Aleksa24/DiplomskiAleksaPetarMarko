@@ -37,9 +37,9 @@ public class Post {
     @JoinColumn(name = "post_id")
     private List<Like> likes;
 
-//    @OneToMany
-//    @JoinColumn(name = "post_id")
-//    private List<Comment> comments;
+    @OneToMany
+    @JoinColumn(name = "post_id")
+    private List<Comment> comments;
 
     @OneToMany
     @JoinColumn(name = "post_id")
