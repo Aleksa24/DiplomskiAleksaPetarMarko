@@ -25,5 +25,5 @@ public class UserDto {
     private boolean isEnabled;
     private boolean isAccountNonLocked;
     private UserRoleDto role;
-    private List<PostDto> favorites;
+    private List<PostShortDto> favorites;
 }
