@@ -14,7 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring",uses = {PostMapper.class})
+@Mapper(componentModel = "spring",
+        uses = {PostMapper.class,ChannelMapper.class})
 public abstract class UserMapper {
 
     public abstract UserDto toDto(User user);

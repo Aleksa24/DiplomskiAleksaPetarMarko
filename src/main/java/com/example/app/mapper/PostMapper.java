@@ -29,7 +29,7 @@ public interface PostMapper {
     PostShortDto toShortDto(Post post);
 
     @InheritInverseConfiguration
-    Post toShortEntity(PostShortDto  postDto);
+    Post toShortEntity(PostShortDto  postShortDto);
 
     List<PostShortDto> toShortDtoList(List<Post> list);
 

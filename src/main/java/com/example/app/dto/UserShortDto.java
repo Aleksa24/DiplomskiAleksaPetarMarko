@@ -18,4 +18,5 @@ public class UserShortDto {
     private String username;
     private String email;
     private String phone;
+
 }
