@@ -19,7 +19,7 @@ public class PostDto {
     private UserShortDto user;
     private ChannelShortDto channel;
     private List<LikeDto> likes;
-    private List<CommentDto> comments;
+    private List<CommentShortDto> comments;
     private List<AttachmentDto> attachments;
 
 }

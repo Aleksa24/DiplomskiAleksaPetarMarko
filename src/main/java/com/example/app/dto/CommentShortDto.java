@@ -10,8 +10,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CommentDto {
-
+public class CommentShortDto {
     private Long id;
     private String text;
     private Date dateCreated;
@@ -20,6 +19,5 @@ public class CommentDto {
     private CommentStatusDto commentStatus;
     private List<LikeDto> likes;
     private List<AttachmentDto> attachments;
-    private List<CommentDto> comments;
 
 }
