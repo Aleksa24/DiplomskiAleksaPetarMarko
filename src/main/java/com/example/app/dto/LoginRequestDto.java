@@ -1,5 +1,6 @@
 package com.example.app.dto;
 
+import com.example.app.validator.EmailNotTaken;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoginRequestDto {
+    @EmailNotTaken
     private String username;
-    private String password;//Todo: must me encoded
+    private String password;//TODO: must me encoded
 }
