@@ -50,8 +50,9 @@ public class User implements Serializable {
     @Column(name = "is_account_non_locked")
     private Boolean isAccountNonLocked;
 
-    private String role;
-    private String[] permissions;
+    @ManyToOne
+    @JoinColumn(name = "user_role_id")
+    private UserRole role;
 
     @ManyToMany
     @JoinTable(
