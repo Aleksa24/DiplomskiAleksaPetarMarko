@@ -1,4 +1,6 @@
-package com.example.app.validator;
+package com.example.app.validator.user.username;
+
+import com.example.app.validator.user.email.EmailNotTakenValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -10,9 +12,9 @@ import java.lang.annotation.Target;
 @Constraint(validatedBy = EmailNotTakenValidator.class)
 @Target({ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface EmailNotTaken {
+public @interface UsernameNotTaken {
 
-    String message() default "this email is already taken";
+    String message() default "this username is already taken";
 
     Class<?>[] groups() default {};
 
