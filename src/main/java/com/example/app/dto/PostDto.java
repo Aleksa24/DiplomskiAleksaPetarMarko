@@ -16,8 +16,8 @@ public class PostDto {
     private String title;
     private String body;
     private Date dateCreated;
-    private UserDto user;
-    private ChannelDto channel;
+    private UserShortDto user;
+    private ChannelShortDto channel;
     private List<LikeDto> likes;
     private List<CommentDto> comments;
     private List<AttachmentDto> attachments;

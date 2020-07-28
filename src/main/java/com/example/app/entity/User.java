@@ -53,12 +53,12 @@ public class User implements Serializable {
     @ManyToOne
     @JoinColumn(name = "user_role_id")
     private UserRole role;
-//
-//    @ManyToMany
-//    @JoinTable(
-//            name = "favorites",
-//            joinColumns = @JoinColumn(name = "user_id"),
-//            inverseJoinColumns = @JoinColumn(name = "post_id"))
-//    private List<Post> favorites;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "favorites",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "post_id"))
+    private List<Post> favorites;
 
 }
