@@ -25,24 +25,24 @@ public class Post {
     @Column(name = "date_created")
     private Date dateCreated;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    @ManyToOne
-    @JoinColumn(name = "channel_id")
-    private Channel channel;
-
-    @OneToMany
-    @JoinColumn(name = "post_id")
-    private List<Like> likes;
-
-    @OneToMany
-    @JoinColumn(name = "post_id")
-    private List<Comment> comments;
-
-    @OneToMany
-    @JoinColumn(name = "post_id")
-    private List<Attachment> attachments;
+//    @ManyToOne
+//    @JoinColumn(name = "user_id")
+//    private User user;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "channel_id")
+//    private Channel channel;
+//
+//    @OneToMany
+//    @JoinColumn(name = "post_id")
+//    private List<Like> likes;
+//
+//    @OneToMany
+//    @JoinColumn(name = "post_id")
+//    private List<Comment> comments;
+//
+//    @OneToMany
+//    @JoinColumn(name = "post_id")
+//    private List<Attachment> attachments;
 
 }
