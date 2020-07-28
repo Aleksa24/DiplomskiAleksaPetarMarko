@@ -12,5 +12,4 @@ public class ChannelStatusDto {
     private Long id;
     private String name;
 
-
 }

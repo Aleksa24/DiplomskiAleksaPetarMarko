@@ -33,16 +33,16 @@ public class Post {
     @JoinColumn(name = "channel_id")
     private Channel channel;
 
-//    @OneToMany
-//    @JoinColumn(name = "post_id")
-//    private List<Like> likes;
-//
+    @OneToMany
+    @JoinColumn(name = "post_id")
+    private List<Like> likes;
+
 //    @OneToMany
 //    @JoinColumn(name = "post_id")
 //    private List<Comment> comments;
-//
-//    @OneToMany
-//    @JoinColumn(name = "post_id")
-//    private List<Attachment> attachments;
+
+    @OneToMany
+    @JoinColumn(name = "post_id")
+    private List<Attachment> attachments;
 
 }

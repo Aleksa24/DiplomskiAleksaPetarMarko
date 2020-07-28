@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoginRequestDto {
+
     @EmailNotTaken
     private String username;
     private String password;//TODO: must me encoded
