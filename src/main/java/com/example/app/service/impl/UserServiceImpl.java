@@ -1,7 +1,7 @@
 package com.example.app.service.impl;
 
 import com.example.app.constants.Constants;
-import com.example.app.dto.UserDto;
+import com.example.app.dto.user.UserDto;
 import com.example.app.entity.User;
 import com.example.app.exception.user.UserNotFoundException;
 import com.example.app.mapper.UserMapper;

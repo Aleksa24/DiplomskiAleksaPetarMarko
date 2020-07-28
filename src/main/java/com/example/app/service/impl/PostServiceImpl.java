@@ -1,6 +1,6 @@
 package com.example.app.service.impl;
 
-import com.example.app.dto.PostDto;
+import com.example.app.dto.post.PostDto;
 import com.example.app.mapper.PostMapper;
 import com.example.app.repository.PostRepository;
 import com.example.app.service.PostService;

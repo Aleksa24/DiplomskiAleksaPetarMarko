@@ -21,7 +21,7 @@ public class ChannelController {
     }
 
     @GetMapping("/all")
-    public List<ChannelDto> getAll(){
+    public List<ChannelDto> findAll(){
         return  channelService.getAll();
     }
 

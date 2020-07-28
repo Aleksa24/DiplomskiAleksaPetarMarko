@@ -21,6 +21,6 @@ public class UsernameNotTakenValidator implements ConstraintValidator<UsernameNo
 
     @Override
     public boolean isValid(String username, ConstraintValidatorContext constraintValidatorContext) {
-        return userService.findByEmail(username).isPresent();
+        return userService.findByUsername(username).isPresent();
     }
 }

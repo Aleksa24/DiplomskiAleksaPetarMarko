@@ -1,6 +1,7 @@
 package com.example.app.service;
 
-import com.example.app.dto.UserDto;
+
+import com.example.app.dto.user.UserDto;
 
 import java.util.List;
 import java.util.Optional;
