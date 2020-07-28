@@ -14,5 +14,5 @@ public class LikeDto {
     private Long id;
     private Date dateCreated;
     private LikeStatusDto likeStatus;
-    private UserDto user;
+    private UserShortDto user;
 }

@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "like")
+@Table(name = "_like")
 @Data
 public class Like {
 
@@ -18,11 +18,11 @@ public class Like {
     @Column(name = "date_created")
     private Date dateCreated;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "like_status_id")
     private LikeStatus likeStatus;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 

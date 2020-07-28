@@ -10,8 +10,7 @@ import lombok.NoArgsConstructor;
 public class AttachmentDto {
 
     private Long id;
-    private String url;
-    private UserDto user;
-
+    private String url;//todo:uraditi da je ovo da vraca fajl
+    private UserShortDto user;
 
 }
