@@ -1,5 +1,10 @@
-package com.example.app.dto;
+package com.example.app.dto.post;
 
+import com.example.app.dto.attachment.AttachmentDto;
+import com.example.app.dto.channel.ChannelShortDto;
+import com.example.app.dto.like.LikeDto;
+import com.example.app.dto.user.UserShortDto;
+import com.example.app.dto.comment.CommentShortDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

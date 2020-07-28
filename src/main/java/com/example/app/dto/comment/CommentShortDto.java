@@ -1,5 +1,8 @@
-package com.example.app.dto;
+package com.example.app.dto.comment;
 
+import com.example.app.dto.attachment.AttachmentDto;
+import com.example.app.dto.like.LikeDto;
+import com.example.app.dto.user.UserShortDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

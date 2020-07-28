@@ -1,8 +1,8 @@
 package com.example.app.mapper;
 
-import com.example.app.dto.*;
+import com.example.app.dto.comment.CommentDto;
+import com.example.app.dto.comment.CommentShortDto;
 import com.example.app.entity.Comment;
-import com.example.app.entity.User;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 

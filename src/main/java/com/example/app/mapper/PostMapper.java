@@ -1,8 +1,8 @@
 package com.example.app.mapper;
 
 
-import com.example.app.dto.PostDto;
-import com.example.app.dto.PostShortDto;
+import com.example.app.dto.post.PostDto;
+import com.example.app.dto.post.PostShortDto;
 import com.example.app.entity.Post;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;

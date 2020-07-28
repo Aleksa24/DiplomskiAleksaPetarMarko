@@ -1,9 +1,9 @@
 package com.example.app.mapper;
 
-import com.example.app.dto.UserDto;
-import com.example.app.dto.UserPermissionDto;
-import com.example.app.dto.UserRoleDto;
-import com.example.app.dto.UserShortDto;
+import com.example.app.dto.user.UserDto;
+import com.example.app.dto.user.UserPermissionDto;
+import com.example.app.dto.user.UserRoleDto;
+import com.example.app.dto.user.UserShortDto;
 import com.example.app.entity.User;
 import com.example.app.entity.UserPermission;
 import com.example.app.entity.UserRole;

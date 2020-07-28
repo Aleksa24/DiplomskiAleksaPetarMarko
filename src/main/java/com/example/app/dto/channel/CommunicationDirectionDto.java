@@ -1,4 +1,4 @@
-package com.example.app.dto;
+package com.example.app.dto.channel;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,10 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CommentStatusDto {
+public class CommunicationDirectionDto {
 
     private Long id;
     private String name;
-
 
 }

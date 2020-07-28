@@ -33,21 +33,21 @@ public class Channel {
     @ManyToOne
     @JoinColumn(name = "communication_direction_id")
     private CommunicationDirection communicationDirection;
-//
-//    @OneToMany
-//    @JoinColumn(name = "channel_id")
-//    private List<Channel> channels;
-//
-//    @OneToMany
-//    @JoinColumn(name = "channel_id")
-//    private List<Attachment> attachments;
-//
-//    @OneToMany
-//    @JoinColumn(name = "channel_id")
-//    private List<UserChannel> userChannels;
-//
-//    @OneToMany
-//    @JoinColumn(name = "channel_id")
-//    private List<Post> posts;
+
+    @OneToMany
+    @JoinColumn(name = "channel_id")
+    private List<Channel> channels;
+
+    @OneToMany
+    @JoinColumn(name = "channel_id")
+    private List<Attachment> attachments;
+
+    @OneToMany
+    @JoinColumn(name = "channel_id")
+    private List<UserChannel> userChannels;
+
+    @OneToMany
+    @JoinColumn(name = "channel_id")
+    private List<Post> posts;
 
 }

@@ -1,18 +1,17 @@
-package com.example.app.dto;
+package com.example.app.dto.attachment;
 
+import com.example.app.dto.user.UserShortDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class LikeDto {
+public class AttachmentDto {
 
     private Long id;
-    private Date dateCreated;
-    private LikeStatusDto likeStatus;
+    private String url;//todo:uraditi da je ovo da vraca fajl
     private UserShortDto user;
+
 }

@@ -1,6 +1,6 @@
 package com.example.app.service.impl;
 
-import com.example.app.dto.CommentDto;
+import com.example.app.dto.comment.CommentDto;
 import com.example.app.mapper.CommentMapper;
 import com.example.app.repository.CommentRepository;
 import com.example.app.service.CommentService;

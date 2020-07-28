@@ -1,10 +1,17 @@
 package com.example.app.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table(name = "user_channel")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserChannel {
 
     @Id

@@ -1,5 +1,6 @@
-package com.example.app.dto;
+package com.example.app.dto.user;
 
+import com.example.app.dto.post.PostShortDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

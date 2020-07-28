@@ -1,4 +1,4 @@
-package com.example.app.dto;
+package com.example.app.dto.comment;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,8 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserPermissionDto {
+public class CommentStatusDto {
 
     private Long id;
     private String name;
+
+
 }

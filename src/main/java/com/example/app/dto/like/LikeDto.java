@@ -1,22 +1,19 @@
-package com.example.app.dto;
+package com.example.app.dto.like;
 
+import com.example.app.dto.user.UserShortDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PostShortDto {
+public class LikeDto {
 
     private Long id;
-    private String title;
-    private String body;
     private Date dateCreated;
+    private LikeStatusDto likeStatus;
     private UserShortDto user;
-    private ChannelShortDto channel;
-
 }

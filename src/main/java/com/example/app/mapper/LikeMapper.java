@@ -1,15 +1,11 @@
 package com.example.app.mapper;
 
-import com.example.app.dto.LikeDto;
-import com.example.app.dto.LikeStatusDto;
-import com.example.app.dto.UserDto;
+import com.example.app.dto.like.LikeDto;
+import com.example.app.dto.like.LikeStatusDto;
 import com.example.app.entity.Like;
 import com.example.app.entity.LikeStatus;
-import com.example.app.entity.User;
-import org.mapstruct.AfterMapping;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
