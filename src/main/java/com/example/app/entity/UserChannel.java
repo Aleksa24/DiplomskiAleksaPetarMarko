@@ -16,8 +16,8 @@ public class UserChannel {
     private Date dateJoined;
 
     @ManyToOne
-    @JoinColumn(name = "role_id")
-    private Role role;
+    @JoinColumn(name = "channel_role_id")
+    private ChannelRole channelRole;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
