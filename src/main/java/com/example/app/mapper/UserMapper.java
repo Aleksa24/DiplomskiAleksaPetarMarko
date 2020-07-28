@@ -5,6 +5,8 @@ import com.example.app.entity.User;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 
@@ -14,5 +16,9 @@ public interface UserMapper {
     @InheritInverseConfiguration
     User toEntity(UserDto userDto);
 
+    List<UserDto> toDtoList(List<User> list);
+
+    @InheritInverseConfiguration
+    List<User> toEntityList(List<UserDto> list);
 
 }
