@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController("/user")
 public class UserController {
 
@@ -29,5 +31,11 @@ public class UserController {
         System.out.println("Saved userDto:" + userDto);
         return savedUserDto;
     }
+
+    @GetMapping("/all")
+    public List<UserDto> getAll(){
+        return userService.findAll();
+    }
+
 
 }
