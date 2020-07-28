@@ -38,10 +38,6 @@ public class User implements Serializable {
     @Column(name = "phone")
     private String phone;
 
-    @ManyToOne // TODO
-    @JoinColumn(name = "user_type_id")
-    private UserType userType;
-
     @Column(name = "is_account_non_expired")
     private Boolean isAccountNonExpired;
 
@@ -54,7 +50,7 @@ public class User implements Serializable {
     @Column(name = "is_account_non_locked")
     private Boolean isAccountNonLocked;
 
-    private String[] roles;
+    private String role;
     private String[] permissions;
 
     @ManyToMany
