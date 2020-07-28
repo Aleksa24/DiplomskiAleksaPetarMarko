@@ -2,17 +2,14 @@ package com.example.app.mapper;
 
 import com.example.app.dto.ChannelDto;
 import com.example.app.dto.ChannelShortDto;
-import com.example.app.dto.UserDto;
 import com.example.app.entity.Channel;
-import com.example.app.entity.User;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring"
-        ,uses = {PostMapper.class}
-        )
+@Mapper(componentModel = "spring",
+        uses = {PostMapper.class})
 public interface ChannelMapper {
 
     ChannelDto toDto(Channel channel);
