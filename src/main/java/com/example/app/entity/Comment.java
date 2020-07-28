@@ -41,9 +41,9 @@ public class Comment {
     @JoinColumn(name = "comment_id")
     private List<Attachment> attachments;
 
-//    @OneToMany
-//    @JoinColumn(name = "comment_id")
-//    private List<Comment> comments;
+    @OneToMany
+    @JoinColumn(name = "comment_id")
+    private List<Comment> comments;
 
 
 }

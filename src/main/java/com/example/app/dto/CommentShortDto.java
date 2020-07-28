@@ -10,16 +10,14 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PostDto {
-
+public class CommentShortDto {
     private Long id;
-    private String title;
-    private String body;
+    private String text;
     private Date dateCreated;
+    private Date dateLastModified;
     private UserShortDto user;
-    private ChannelShortDto channel;
+    private CommentStatusDto commentStatus;
     private List<LikeDto> likes;
-    private List<CommentShortDto> comments;
     private List<AttachmentDto> attachments;
 
 }

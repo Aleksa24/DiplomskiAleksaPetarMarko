@@ -8,8 +8,11 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring",uses = {UserMapper.class,LikeMapper.class})
+@Mapper(componentModel = "spring",
+        uses = {UserMapper.class,LikeMapper.class, PostMapper.class,
+                AttachmentMapper.class,ChannelMapper.class})
 public interface CommentMapper {
+
     CommentDto toDto(Comment comment);
 
     @InheritInverseConfiguration
@@ -19,6 +22,17 @@ public interface CommentMapper {
 
     @InheritInverseConfiguration
     List<Comment> toEntityList(List<CommentDto> list);
+
+
+    CommentShortDto toShortDto(Comment comment);
+
+    @InheritInverseConfiguration
+    Comment toShortEntity(CommentShortDto commentDto);
+
+    List<CommentShortDto> toShortDtoList(List<Comment> list);
+
+    @InheritInverseConfiguration
+    List<Comment> toShortEntityList(List<CommentShortDto> list);
 
 
 }
