@@ -9,48 +9,46 @@ import com.example.app.entity.UserPermission;
 import com.example.app.entity.UserRole;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring",uses = {PostMapper.class})
-public abstract class UserMapper {
+@Mapper(componentModel = "spring", uses = {PostMapper.class})
+public interface UserMapper {
 
-    public abstract UserDto toDto(User user);
-
-    @InheritInverseConfiguration
-    public abstract User toEntity(UserDto userDto);
-
-    public abstract List<UserDto> toDtoList(List<User> list);
+    UserDto toDto(User user);
 
     @InheritInverseConfiguration
-    public abstract List<User> toEntityList(List<UserDto> list);
+    User toEntity(UserDto userDto);
 
-    public abstract UserRoleDto toUserRoleDto(UserRole userRole);
-
-    @InheritInverseConfiguration
-    public abstract UserRole toUserRoleEntity(UserRoleDto userRoleDto);
-
-    public abstract UserPermissionDto toUserPermissionDto(UserPermission userPermission);
+    List<UserDto> toDtoList(List<User> list);
 
     @InheritInverseConfiguration
-    public abstract UserPermission toUserPermissionEntity(UserPermissionDto userPermissionDto);
+    List<User> toEntityList(List<UserDto> list);
 
-
-    public abstract List<UserPermissionDto> toUserPermissionDtoList(List<UserPermission> list);
-
-    @InheritInverseConfiguration
-    public abstract List<UserPermission> toUserPermissionEntityList(List<UserPermissionDto> list);
-
-    public abstract UserShortDto toShortDto(User user);
+    UserRoleDto toUserRoleDto(UserRole userRole);
 
     @InheritInverseConfiguration
-    public abstract User toShortEntity(UserShortDto user);
+    UserRole toUserRoleEntity(UserRoleDto userRoleDto);
 
-    public abstract List<UserShortDto> toShortDtoList(List<User> list);
+    UserPermissionDto toUserPermissionDto(UserPermission userPermission);
 
     @InheritInverseConfiguration
-    public abstract List<User> toShortEntityList(List<UserShortDto> list);
+    UserPermission toUserPermissionEntity(UserPermissionDto userPermissionDto);
+
+
+    List<UserPermissionDto> toUserPermissionDtoList(List<UserPermission> list);
+
+    @InheritInverseConfiguration
+    List<UserPermission> toUserPermissionEntityList(List<UserPermissionDto> list);
+
+    UserShortDto toShortDto(User user);
+
+    @InheritInverseConfiguration
+    User toShortEntity(UserShortDto user);
+
+    List<UserShortDto> toShortDtoList(List<User> list);
+
+    @InheritInverseConfiguration
+    List<User> toShortEntityList(List<UserShortDto> list);
 
 }
