@@ -10,8 +10,8 @@ import org.mapstruct.Mapper;
 import java.util.List;
 
 @Mapper(componentModel = "spring",
-        uses = {UserMapper.class, ChannelMapper.class,LikeMapper.class
-                ,AttachmentMapper.class,CommentMapper.class})
+        uses = {UserMapper.class, ChannelMapper.class, LikeMapper.class
+                , AttachmentMapper.class, CommentMapper.class})
 public interface PostMapper {
 
     PostDto toDto(Post post);
@@ -28,7 +28,7 @@ public interface PostMapper {
     PostShortDto toShortDto(Post post);
 
     @InheritInverseConfiguration
-    Post toShortEntity(PostShortDto  postShortDto);
+    Post toShortEntity(PostShortDto postShortDto);
 
     List<PostShortDto> toShortDtoList(List<Post> list);
 

@@ -12,8 +12,7 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring",
-        uses = {PostMapper.class})
+@Mapper(componentModel = "spring", uses = {PostMapper.class})
 public interface ChannelMapper {
 
     ChannelDto toDto(Channel channel);

@@ -1,6 +1,8 @@
 package com.example.app.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -8,6 +10,8 @@ import java.util.Date;
 @Entity
 @Table(name = "_like")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Like {
 
     @Id

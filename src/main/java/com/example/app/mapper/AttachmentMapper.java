@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring",uses = {UserMapper.class,LikeMapper.class})
+@Mapper(componentModel = "spring", uses = {UserMapper.class, LikeMapper.class})
 public interface AttachmentMapper {
     AttachmentDto toDto(Attachment attachment);
 

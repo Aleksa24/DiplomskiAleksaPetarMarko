@@ -1,12 +1,16 @@
 package com.example.app.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "communication_direction")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class CommunicationDirection {
 
     @Id

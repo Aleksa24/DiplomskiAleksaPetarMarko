@@ -9,8 +9,8 @@ import org.mapstruct.Mapper;
 import java.util.List;
 
 @Mapper(componentModel = "spring",
-        uses = {UserMapper.class,LikeMapper.class, PostMapper.class,
-                AttachmentMapper.class,ChannelMapper.class})
+        uses = {UserMapper.class, LikeMapper.class, PostMapper.class,
+                AttachmentMapper.class, ChannelMapper.class})
 public interface CommentMapper {
 
     CommentDto toDto(Comment comment);

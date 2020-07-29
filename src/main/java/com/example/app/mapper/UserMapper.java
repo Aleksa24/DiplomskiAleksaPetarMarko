@@ -8,11 +8,13 @@ import com.example.app.entity.User;
 import com.example.app.entity.UserPermission;
 import com.example.app.entity.UserRole;
 import org.mapstruct.InheritInverseConfiguration;
+import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {PostMapper.class})
+@Mapper(componentModel = "spring", uses = {PostMapper.class},
+        injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface UserMapper {
 
     UserDto toDto(User user);
