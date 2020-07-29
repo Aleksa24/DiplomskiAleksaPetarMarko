@@ -12,5 +12,5 @@ public class LoginRequestDto {
 
     @EmailNotTaken
     private String username;
-    private String password;//TODO: must me encoded
+    private String password; // TODO must me encoded
 }

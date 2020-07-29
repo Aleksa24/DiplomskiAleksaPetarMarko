@@ -22,7 +22,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostDto> getAll() {
+    public List<PostDto> findAll() {
         return postMapper.toDtoList(postRepository.findAll());
     }
 }

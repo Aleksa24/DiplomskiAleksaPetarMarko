@@ -22,7 +22,7 @@ public class ChannelController {
 
     @GetMapping("/all")
     public List<ChannelDto> findAll(){
-        return  channelService.getAll();
+        return  channelService.findAll();
     }
 
 }

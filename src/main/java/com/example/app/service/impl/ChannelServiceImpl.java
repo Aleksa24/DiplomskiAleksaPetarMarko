@@ -22,7 +22,7 @@ public class ChannelServiceImpl implements ChannelService {
     }
 
     @Override
-    public List<ChannelDto> getAll() {
+    public List<ChannelDto> findAll() {
         return channelMapper.toDtoList(channelRepository.findAll());
     }
 }

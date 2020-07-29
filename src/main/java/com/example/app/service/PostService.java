@@ -5,5 +5,6 @@ import com.example.app.dto.post.PostDto;
 import java.util.List;
 
 public interface PostService {
-    List<PostDto> getAll();
+
+    List<PostDto> findAll();
 }

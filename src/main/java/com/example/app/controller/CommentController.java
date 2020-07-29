@@ -20,7 +20,7 @@ public class CommentController {
     }
 
     @GetMapping("/{id}")
-    public CommentDto findById(@PathVariable("id") Long id){
-        return commentService.getById(id);
+    public CommentDto findById(@PathVariable("id") Long id) {
+        return commentService.findById(id);
     }
 }
