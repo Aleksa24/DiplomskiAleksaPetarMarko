@@ -65,4 +65,7 @@ public class User implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "post_id"))
     private List<Post> favorites;
 
+    public List<UserPermission> getUserPermissions() {
+        return role.getUserPermissions();
+    }
 }
