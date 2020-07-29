@@ -57,8 +57,6 @@ class UserControllerTest {
 
     }
 
-    @Test
-    void findByIdException() {
-        // TODO
-    }
+    // TODO findByIdException
+
 }
