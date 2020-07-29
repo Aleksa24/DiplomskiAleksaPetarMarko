@@ -22,13 +22,13 @@ import static org.mockito.Mockito.when;
 class UserServiceImplTest {
 
     @InjectMocks
-    UserServiceImpl userService;
+    private UserServiceImpl userService;
 
     @Mock
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Mock
-    UserMapper userMapper;
+    private UserMapper userMapper;
 
     @Test
     void findByIdSuccess() {
