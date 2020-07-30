@@ -1,5 +1,6 @@
 package com.example.app.validator.user.username;
 
+import com.example.app.exception.user.UserNotFoundException;
 import com.example.app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -21,6 +22,11 @@ public class UsernameNotTakenValidator implements ConstraintValidator<UsernameNo
 
     @Override
     public boolean isValid(String username, ConstraintValidatorContext constraintValidatorContext) {
-        return userService.findByUsername(username).isPresent();
+        try {
+            userService.findByUsername(username);
+            return true;
+        } catch (UserNotFoundException e){
+            return false;
+        }
     }
 }

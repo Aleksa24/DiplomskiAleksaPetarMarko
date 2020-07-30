@@ -1,5 +1,6 @@
 package com.example.app.validator.user.email;
 
+import com.example.app.exception.user.UserNotFoundException;
 import com.example.app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -21,6 +22,11 @@ public class EmailNotTakenValidator implements ConstraintValidator<EmailNotTaken
 
     @Override
     public boolean isValid(String email, ConstraintValidatorContext constraintValidatorContext) {
-        return userService.findByEmail(email).isPresent();
+        try {
+            userService.findByEmail(email);
+            return true;
+        } catch (UserNotFoundException e) {
+            return false;
+        }
     }
 }

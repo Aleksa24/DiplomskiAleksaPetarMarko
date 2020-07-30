@@ -79,12 +79,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers(AUTH_WHITELIST);
     }
 
-    /**
-     * authenticationManager -> authenticationManagerBean
-     *
-     * @return
-     * @throws Exception
-     */
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
