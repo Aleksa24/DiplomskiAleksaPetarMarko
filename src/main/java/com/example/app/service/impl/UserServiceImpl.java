@@ -24,24 +24,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserMapper userMapper;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository,
-                           UserMapper userMapper) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-        User user = userRepository.findUserByUsername(username);
-        if (user == null) {
-            throw new UsernameNotFoundException(String.format(USER_NOT_FOUND_BY_USERNAME, username));
-        } else {
-//            validateLoginAttempt(user);//todo
-            userRepository.save(user);
-            UserPrincipal userPrincipal = new UserPrincipal(user);
-            return userPrincipal;
-        }
     }
 
     @Override
@@ -79,5 +64,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public UserDto findByEmail(String email) {
         return userMapper.toDto(userRepository.findByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException(String.format(USER_NOT_FOUND_BY_EMAIL, email))));
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException(
+                        String.format(USER_NOT_FOUND_BY_USERNAME, username)));
+//        validateLoginAttempt(user); TODO
+//        userRepository.save(user);
+        return new UserPrincipal(user);
     }
 }

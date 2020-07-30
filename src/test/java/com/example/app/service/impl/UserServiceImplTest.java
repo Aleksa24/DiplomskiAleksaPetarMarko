@@ -35,10 +35,12 @@ class UserServiceImplTest {
 
         User user = new User();
         user.setId(1L);
-        when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
+        user.setFirstName("Mark");
+        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
 
         UserDto userDto = new UserDto();
         userDto.setId(1L);
+        userDto.setFirstName("Mark");
         when(userMapper.toDto(user)).thenReturn(userDto);
 
         UserDto userDto1 = userService.findById(1L);
