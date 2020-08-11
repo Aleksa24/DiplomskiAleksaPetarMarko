@@ -25,6 +25,6 @@ public class UserDto {
     private boolean isCredentialsNonExpired;
     private boolean isEnabled;
     private boolean isAccountNonLocked;
-    private UserRoleDto role;
+    private UserRoleDto Ro;
     private List<PostShortDto> favorites;
 }
