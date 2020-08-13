@@ -1,6 +1,7 @@
 package com.example.app.service.impl;
 
 import com.example.app.dto.channel.ChannelDto;
+import com.example.app.dto.channel.ChannelShortDto;
 import com.example.app.mapper.ChannelMapper;
 import com.example.app.repository.ChannelRepository;
 import com.example.app.service.ChannelService;
@@ -22,7 +23,12 @@ public class ChannelServiceImpl implements ChannelService {
     }
 
     @Override
-    public List<ChannelDto> findAll() {
-        return channelMapper.toDtoList(channelRepository.findAll());
+    public List<ChannelShortDto> findAll() {
+        return channelMapper.toShortDtoList(channelRepository.findAll());
+    }
+
+    @Override
+    public ChannelDto findById(Long id) {
+        return channelMapper.toDto(channelRepository.findById(id).get());//todo:obradi kada se baca greska
     }
 }

@@ -1,10 +1,13 @@
 package com.example.app.service;
 
 import com.example.app.dto.channel.ChannelDto;
+import com.example.app.dto.channel.ChannelShortDto;
 
 import java.util.List;
 
 public interface ChannelService {
 
-    List<ChannelDto> findAll();
+    List<ChannelShortDto> findAll();
+
+    ChannelDto findById(Long id);
 }

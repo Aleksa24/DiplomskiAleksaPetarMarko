@@ -9,14 +9,20 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.Collections;
 
 @SpringBootApplication
 public class AppApplication {
 
+    public static final String CHANNEL_FOLDER = System.getProperty("user.home") + "/DiplomskiAplikacija/channel/";
+    public static final String USER_FOLDER = System.getProperty("user.home") + "/DiplomskiAplikacija/user/";
+
     public static void main(String[] args) {
         SpringApplication.run(AppApplication.class, args);
+        new File(USER_FOLDER).mkdirs();
+        new File(CHANNEL_FOLDER).mkdirs();
     }
 
     @Bean
