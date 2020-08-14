@@ -24,9 +24,9 @@ public class EmailNotTakenValidator implements ConstraintValidator<EmailNotTaken
     public boolean isValid(String email, ConstraintValidatorContext constraintValidatorContext) {
         try {
             userService.findByEmail(email);
-            return true;
-        } catch (UserNotFoundException e) {
             return false;
+        } catch (UserNotFoundException e) {
+            return true;
         }
     }
 }
