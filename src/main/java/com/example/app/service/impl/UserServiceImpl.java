@@ -5,14 +5,17 @@ import com.example.app.entity.User;
 import com.example.app.exception.user.UserNotFoundException;
 import com.example.app.mapper.UserMapper;
 import com.example.app.repository.UserRepository;
+import com.example.app.repository.UserRoleRepository;
 import com.example.app.security.user.UserPrincipal;
 import com.example.app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 import static com.example.app.constants.Constants.*;
@@ -22,11 +25,18 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
+    private final UserRoleRepository userRoleRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
+    public UserServiceImpl(UserRepository userRepository,
+                           UserMapper userMapper,
+                           PasswordEncoder passwordEncoder,
+                           UserRoleRepository userRoleRepository) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
+        this.passwordEncoder = passwordEncoder;
+        this.userRoleRepository = userRoleRepository;
     }
 
     @Override
@@ -64,6 +74,22 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public UserDto findByEmail(String email) {
         return userMapper.toDto(userRepository.findByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException(String.format(USER_NOT_FOUND_BY_EMAIL, email))));
+    }
+
+    @Override
+    public UserDto add(UserDto userDto) {
+        User user = userMapper.toEntity(userDto);
+        user.setRole(userRoleRepository.findByName(user.getRole().getName()).orElseThrow(
+                () -> new RuntimeException("Role Not Found!")
+        ));
+        user.setUsername(user.getEmail());
+        user.setPassword(passwordEncoder.encode(user.getEmail()));
+        user.setDateCreated(new Date());
+        user.setAccountNonExpired(true);
+        user.setAccountNonLocked(true);
+        user.setCredentialsNonExpired(true);
+        user.setEnabled(true);
+        return userMapper.toDto(userRepository.save(user));
     }
 
     @Override

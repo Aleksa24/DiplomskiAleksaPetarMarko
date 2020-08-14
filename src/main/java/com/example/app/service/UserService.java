@@ -19,4 +19,5 @@ public interface UserService {
 
     UserDto findByEmail(String email);
 
+    UserDto add(UserDto userDto);
 }
