@@ -25,4 +25,9 @@ public class PostServiceImpl implements PostService {
     public List<PostDto> findAll() {
         return postMapper.toDtoList(postRepository.findAll());
     }
+
+    @Override
+    public PostDto findById(Long id) {
+        return this.postMapper.toDto(this.postRepository.findById(id).get());//todo: odraditi validaciju i sve sto treba, bacanje greske ako nema post
+    }
 }

@@ -4,6 +4,7 @@ import com.example.app.dto.post.PostDto;
 import com.example.app.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,5 +24,10 @@ public class PostController {
     @GetMapping("/all")
     public List<PostDto> findAll() {
         return postService.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public PostDto findById(@PathVariable("id") Long id) {
+        return postService.findById(id);
     }
 }

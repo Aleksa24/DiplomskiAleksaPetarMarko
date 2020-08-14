@@ -7,4 +7,6 @@ import java.util.List;
 public interface PostService {
 
     List<PostDto> findAll();
+
+    PostDto findById(Long id);
 }
