@@ -31,4 +31,9 @@ public class ChannelServiceImpl implements ChannelService {
     public ChannelDto findById(Long id) {
         return channelMapper.toDto(channelRepository.findById(id).get());//todo:obradi kada se baca greska
     }
+
+    @Override
+    public ChannelDto save(ChannelDto channelDto) {
+        return channelMapper.toDto(channelRepository.save(channelMapper.toEntity(channelDto)));
+    }
 }

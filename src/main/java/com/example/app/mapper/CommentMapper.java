@@ -2,7 +2,9 @@ package com.example.app.mapper;
 
 import com.example.app.dto.comment.CommentDto;
 import com.example.app.dto.comment.CommentShortDto;
+import com.example.app.dto.comment.CommentStatusDto;
 import com.example.app.entity.Comment;
+import com.example.app.entity.CommentStatus;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 
@@ -33,6 +35,12 @@ public interface CommentMapper {
 
     @InheritInverseConfiguration
     List<Comment> toShortEntityList(List<CommentShortDto> list);
+
+    //CommentStatus:
+    CommentStatusDto toCommentStatusDto(CommentStatus commentStatus);
+
+    @InheritInverseConfiguration
+    CommentStatus toCommentStatusEntity(CommentStatusDto commentStatusDto);
 
 
 }

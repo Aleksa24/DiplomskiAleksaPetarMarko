@@ -41,7 +41,7 @@ public class Post {
     @JoinColumn(name = "post_id")
     private List<Like> likes;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "post_id")
     private List<Comment> comments;
 

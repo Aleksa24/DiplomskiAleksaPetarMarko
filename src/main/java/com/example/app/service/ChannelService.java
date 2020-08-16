@@ -10,4 +10,6 @@ public interface ChannelService {
     List<ChannelShortDto> findAll();
 
     ChannelDto findById(Long id);
+
+    ChannelDto save(ChannelDto channelDto);
 }

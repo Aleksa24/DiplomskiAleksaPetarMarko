@@ -9,4 +9,8 @@ public interface PostService {
     List<PostDto> findAll();
 
     PostDto findById(Long id);
+
+    PostDto update(PostDto postDto);
+
+    PostDto save(PostDto postDto);
 }
