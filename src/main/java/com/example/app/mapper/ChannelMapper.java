@@ -1,9 +1,7 @@
 package com.example.app.mapper;
 
-import com.example.app.dto.channel.ChannelDto;
-import com.example.app.dto.channel.ChannelRoleDto;
-import com.example.app.dto.channel.ChannelShortDto;
-import com.example.app.dto.channel.UserChannelDto;
+import com.example.app.dto.channel.*;
+import com.example.app.entity.Category;
 import com.example.app.entity.Channel;
 import com.example.app.entity.ChannelRole;
 import com.example.app.entity.UserChannel;
@@ -57,5 +55,10 @@ public interface ChannelMapper {
 
     @InheritInverseConfiguration
     List<ChannelRole> toChanelRoleEntityList(List<ChannelRoleDto> list);
+
+    List<CategoryDto> toCategoryDtoList(List<Category> list);
+
+    @InheritInverseConfiguration
+    List<Category> toCategoryEntityList(List<CategoryDto> list);
 
 }
