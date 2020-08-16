@@ -33,6 +33,10 @@ public class PostController {
     public PostDto addComment(@RequestBody PostDto postDto){
         return postService.update(postDto);
     }
+    @PostMapping("/save")
+    public PostDto save(@RequestBody PostDto postDto){
+        return postService.save(postDto);
+    }
 
 }
 

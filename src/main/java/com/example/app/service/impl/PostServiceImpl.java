@@ -35,9 +35,13 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostDto update(PostDto postDto) {
         Post post = postMapper.toEntity(postDto);
-        PostDto postDto1 = postMapper.toDto(postRepository.save(post));
-        System.out.println("post   " + postDto1);
+        PostDto postDto1 = postMapper.toDto(postRepository.save(post));//todo: odraditi validaciju i sve sto treba, bacanje greske ako nema post
         return postDto1;
+    }
+
+    @Override
+    public PostDto save(PostDto postDto) {
+        return postMapper.toDto(postRepository.save(postMapper.toEntity(postDto)));//todo: odraditi validaciju i sve sto treba, bacanje greske ako nema post
     }
 }
 

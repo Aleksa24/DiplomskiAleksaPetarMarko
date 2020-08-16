@@ -4,10 +4,7 @@ import com.example.app.dto.channel.ChannelDto;
 import com.example.app.dto.channel.ChannelShortDto;
 import com.example.app.service.ChannelService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,5 +27,11 @@ public class ChannelController {
     @GetMapping("/{id}")
     public ChannelDto getById(@PathVariable("id") Long id){
         return  channelService.findById(id);
+    }
+
+    @PostMapping("/save")
+    public ChannelDto save(@RequestBody ChannelDto channelDto){
+        System.out.println("channel/save:");
+        return channelService.save(channelDto);
     }
 }

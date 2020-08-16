@@ -17,8 +17,4 @@ public class ChannelShortDto {
     private CategoryDto category;
     private ChannelStatusDto channelStatus;
     private CommunicationDirectionDto communicationDirection;
-//    private List<ChannelDto> channels;
-//    private List<AttachmentDto> attachments;
-//    private List<UserChannelDto> userChannels;
-//    private List<PostDto> posts;
 }
