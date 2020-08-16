@@ -3,6 +3,8 @@ package com.example.app.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -24,9 +26,11 @@ public class Comment {
     private String text;
 
     @Column(name = "date_created")
+    @CreatedDate
     private Date dateCreated;
 
     @Column(name = "date_last_modified")
+    @LastModifiedDate
     private Date dateLastModified;
 
     @ManyToOne

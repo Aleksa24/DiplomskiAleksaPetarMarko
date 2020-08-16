@@ -3,10 +3,7 @@ package com.example.app.controller;
 import com.example.app.dto.post.PostDto;
 import com.example.app.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,4 +27,12 @@ public class PostController {
     public PostDto findById(@PathVariable("id") Long id) {
         return postService.findById(id);
     }
+
+    //todo:videti kako da se imenuje kasnije
+    @PostMapping("/addComment")
+    public PostDto addComment(@RequestBody PostDto postDto){
+        return postService.update(postDto);
+    }
+
 }
+
