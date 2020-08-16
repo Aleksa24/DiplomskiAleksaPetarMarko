@@ -49,7 +49,7 @@ public class Comment {
     @JoinColumn(name = "comment_id")
     private List<Attachment> attachments;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "comment_id")
     private List<Comment> comments;
 

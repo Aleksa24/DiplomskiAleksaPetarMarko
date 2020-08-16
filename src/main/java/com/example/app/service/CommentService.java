@@ -8,4 +8,6 @@ public interface CommentService {
     CommentDto findById(Long id);
 
     CommentStatusDto findCommentStatusByName(String name);
+
+    CommentDto save(CommentDto commentDto);
 }

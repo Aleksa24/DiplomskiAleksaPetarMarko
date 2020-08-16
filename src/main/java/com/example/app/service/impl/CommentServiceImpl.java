@@ -38,4 +38,9 @@ public class CommentServiceImpl implements CommentService {
     public CommentStatusDto findCommentStatusByName(String name) {
         return commentMapper.toCommentStatusDto(commentStatusRepository.findByName(name).get());//todo: odradi greske
     }
+
+    @Override
+    public CommentDto save(CommentDto commentDto) {
+        return commentMapper.toDto(commentRepository.save(commentMapper.toEntity(commentDto)));//todo: odradi greske
+    }
 }

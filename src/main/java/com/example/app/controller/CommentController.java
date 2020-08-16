@@ -4,10 +4,7 @@ import com.example.app.dto.comment.CommentDto;
 import com.example.app.dto.comment.CommentStatusDto;
 import com.example.app.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/comment")
@@ -28,5 +25,9 @@ public class CommentController {
     @GetMapping("/comment-status/{name}")
     public CommentStatusDto findCommentStatusByName(@PathVariable("name") String name) {
         return commentService.findCommentStatusByName(name);
+    }
+    @PostMapping("/addReplay")
+    public CommentDto addReplay(@RequestBody CommentDto commentDto){
+        return this.commentService.save(commentDto);
     }
 }
