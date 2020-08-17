@@ -3,6 +3,8 @@ package com.example.app.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -13,6 +15,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class Post {
 
     @Id
@@ -27,6 +30,7 @@ public class Post {
     private String body;
 
     @Column(name = "date_created")
+    @CreatedDate
     private Date dateCreated;
 
     @ManyToOne(fetch = FetchType.LAZY)
