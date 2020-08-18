@@ -41,7 +41,7 @@ public class Post {
     @JoinColumn(name = "channel_id")
     private Channel channel;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "post_id")
     private List<Like> likes;
 
@@ -49,7 +49,7 @@ public class Post {
     @JoinColumn(name = "post_id")
     private List<Comment> comments;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "post_id")
     private List<Attachment> attachments;
 

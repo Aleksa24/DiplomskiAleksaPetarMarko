@@ -2,6 +2,7 @@ package com.example.app.controller;
 
 import com.example.app.dto.comment.CommentDto;
 import com.example.app.dto.comment.CommentStatusDto;
+import com.example.app.dto.like.LikeStatusDto;
 import com.example.app.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -30,4 +31,10 @@ public class CommentController {
     public CommentDto addReplay(@RequestBody CommentDto commentDto){
         return this.commentService.save(commentDto);
     }
+
+    @GetMapping("/like-status/{likeStatusString}")
+    public LikeStatusDto findLikeStatusByName(@PathVariable("likeStatusString") String likeStatusString){
+        return this.commentService.findLikeStatusByName(likeStatusString);
+    }
+
 }

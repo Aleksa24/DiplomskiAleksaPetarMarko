@@ -2,6 +2,7 @@ package com.example.app.service;
 
 import com.example.app.dto.comment.CommentDto;
 import com.example.app.dto.comment.CommentStatusDto;
+import com.example.app.dto.like.LikeStatusDto;
 
 public interface CommentService {
 
@@ -10,4 +11,6 @@ public interface CommentService {
     CommentStatusDto findCommentStatusByName(String name);
 
     CommentDto save(CommentDto commentDto);
+
+    LikeStatusDto findLikeStatusByName(String likeStatusString);
 }

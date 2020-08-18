@@ -38,5 +38,10 @@ public class PostController {
         return postService.save(postDto);
     }
 
+    @PostMapping("/addLike")
+    public PostDto addLike(@RequestBody PostDto postDto){
+        return this.postService.save(postDto);
+    }
+
 }
 

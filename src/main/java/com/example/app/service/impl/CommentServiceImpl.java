@@ -3,10 +3,12 @@ package com.example.app.service.impl;
 import com.example.app.constants.Constants;
 import com.example.app.dto.comment.CommentDto;
 import com.example.app.dto.comment.CommentStatusDto;
+import com.example.app.dto.like.LikeStatusDto;
 import com.example.app.exception.comment.CommentNotFountException;
 import com.example.app.mapper.CommentMapper;
 import com.example.app.repository.CommentRepository;
 import com.example.app.repository.CommentStatusRepository;
+import com.example.app.repository.LikeStatusRepository;
 import com.example.app.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,14 +19,17 @@ public class CommentServiceImpl implements CommentService {
     private final CommentRepository commentRepository;
     private final CommentMapper commentMapper;
     private final CommentStatusRepository commentStatusRepository;
+    private final LikeStatusRepository likeStatusRepository;
 
     @Autowired
     public CommentServiceImpl(CommentRepository commentRepository,
                               CommentMapper commentMapper,
-                              CommentStatusRepository commentStatusRepository) {
+                              CommentStatusRepository commentStatusRepository,
+                              LikeStatusRepository likeStatusRepository) {
         this.commentRepository = commentRepository;
         this.commentMapper = commentMapper;
         this.commentStatusRepository = commentStatusRepository;
+        this.likeStatusRepository = likeStatusRepository;
     }
 
     @Override
@@ -42,5 +47,10 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public CommentDto save(CommentDto commentDto) {
         return commentMapper.toDto(commentRepository.save(commentMapper.toEntity(commentDto)));//todo: odradi greske
+    }
+
+    @Override
+    public LikeStatusDto findLikeStatusByName(String likeStatusString) {
+        return commentMapper.toLikeStatusDto(likeStatusRepository.findByName(likeStatusString).get());//todo: odradi greske
     }
 }
