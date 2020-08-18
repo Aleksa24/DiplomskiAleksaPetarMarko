@@ -43,11 +43,11 @@ public class Comment {
     @JoinColumn(name = "comment_status_id")
     private CommentStatus commentStatus;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "comment_id")
     private List<Like> likes;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "comment_id")
     private List<Attachment> attachments;
 

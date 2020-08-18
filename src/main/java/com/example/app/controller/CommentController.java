@@ -36,5 +36,9 @@ public class CommentController {
     public LikeStatusDto findLikeStatusByName(@PathVariable("likeStatusString") String likeStatusString){
         return this.commentService.findLikeStatusByName(likeStatusString);
     }
+    @PostMapping("/addLike")
+    public CommentDto addLike(@RequestBody CommentDto commentDto){
+        return this.commentService.save(commentDto);
+    }
 
 }
