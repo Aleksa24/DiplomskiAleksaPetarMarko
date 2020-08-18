@@ -3,6 +3,8 @@ package com.example.app.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -12,6 +14,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class Like {
 
     @Id
@@ -20,6 +23,7 @@ public class Like {
     private Long id;
 
     @Column(name = "date_created")
+    @LastModifiedDate
     private Date dateCreated;
 
     @ManyToOne(fetch = FetchType.EAGER)
