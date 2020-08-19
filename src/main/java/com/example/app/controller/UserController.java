@@ -4,8 +4,10 @@ import com.example.app.dto.user.UserDto;
 import com.example.app.service.UserService;
 import com.example.app.validator.user.groups.Add;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
 
@@ -38,5 +40,14 @@ public class UserController {
     @PostMapping("/add")
     public UserDto add(@Validated(Add.class) @RequestBody UserDto userDto) {
         return userService.add(userDto);
+    }
+
+    @GetMapping("all_pagination")
+    public List<UserDto> findAllPagination(Pageable pageable) {
+        return userService.findAllPagination(pageable);
+    }
+    @GetMapping("total_count")
+    public Long totalCount(){
+        return userService.totalCount();
     }
 }

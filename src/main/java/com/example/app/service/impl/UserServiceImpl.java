@@ -9,6 +9,7 @@ import com.example.app.repository.UserRoleRepository;
 import com.example.app.security.user.UserPrincipal;
 import com.example.app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -90,6 +91,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setCredentialsNonExpired(true);
         user.setEnabled(true);
         return userMapper.toDto(userRepository.save(user));
+    }
+
+    @Override
+    public List<UserDto> findAllPagination(Pageable pageable) {
+        return userMapper.toDtoList(userRepository.findAll(pageable).getContent());
+    }
+
+    @Override
+    public Long totalCount() {
+        return userRepository.count();
     }
 
     @Override

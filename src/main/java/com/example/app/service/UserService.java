@@ -2,6 +2,7 @@ package com.example.app.service;
 
 
 import com.example.app.dto.user.UserDto;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -20,4 +21,8 @@ public interface UserService {
     UserDto findByEmail(String email);
 
     UserDto add(UserDto userDto);
+
+    List<UserDto> findAllPagination(Pageable pageable);
+
+    Long totalCount();
 }
