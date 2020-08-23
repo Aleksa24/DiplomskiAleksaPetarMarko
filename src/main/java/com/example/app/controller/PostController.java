@@ -1,10 +1,13 @@
 package com.example.app.controller;
 
+import com.example.app.dto.attachment.AttachmentDto;
 import com.example.app.dto.post.PostDto;
 import com.example.app.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -41,6 +44,13 @@ public class PostController {
     @PostMapping("/addLike")
     public PostDto addLike(@RequestBody PostDto postDto){
         return this.postService.save(postDto);
+    }
+
+    @PostMapping("/addAttachment")
+    public AttachmentDto addAttachment(@RequestParam MultipartFile file,
+                                       @RequestParam Long postId,
+                                       @RequestParam Long userId) throws IOException {
+        return postService.addAttachment(postId,userId,file);
     }
 
 }
