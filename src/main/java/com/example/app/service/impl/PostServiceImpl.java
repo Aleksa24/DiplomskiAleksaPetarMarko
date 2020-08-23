@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -73,23 +74,24 @@ public class PostServiceImpl implements PostService {
         User user = userRepository.findById(userId).get();
         Attachment newAttachment = new Attachment();
         newAttachment.setUser(user);
+        newAttachment.setOriginalName(file.getOriginalFilename());
 
-        Path postFolder = Paths.get(POST_FOLDER+postId+"/attachments/"+file.getOriginalFilename());
+        Path postFolder = Paths.get(POST_FOLDER+postId+"/attachments");
         if (!Files.exists(postFolder)){
             Files.createDirectories(postFolder);
         }
-        newAttachment.setUrl(postFolder.toAbsolutePath().toString());
+        newAttachment.setUrl(postFolder.resolve(file.getOriginalFilename()).toAbsolutePath().toString());
         System.out.println("new Attachment postFolder.toAbsolutePath().toString(): " + newAttachment.getUrl());
-        post.getAttachments().add(newAttachment);
-        postRepository.save(post);
 
+        if (Files.exists(postFolder.resolve(file.getOriginalFilename()))) {
+            throw new FileAlreadyExistsException("Fajl " + file.getOriginalFilename() + " vec postoji!!!");
+        }
         Files.copy(file.getInputStream(),
                 postFolder.resolve(file.getOriginalFilename()));
 
+        post.getAttachments().add(newAttachment);
+        postRepository.save(post);
         Attachment attachmentWithId = attachmentRepository.findByUrl(newAttachment.getUrl()).get();
-
-        System.out.println("NEW ATTACHMENT: " + attachmentWithId.getId());
-
         return attachmentMapper.toDto(attachmentWithId);
     }
 }

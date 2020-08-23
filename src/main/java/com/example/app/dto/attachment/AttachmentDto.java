@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 public class AttachmentDto {
 
     private Long id;
-    private String url; // TODO set field to file
+    private String originalName;
     private UserShortDto user;
 
 }

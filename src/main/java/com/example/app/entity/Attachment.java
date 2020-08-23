@@ -21,6 +21,9 @@ public class Attachment {
     @Column(name = "url")
     private String url;
 
+    @Column(name = "original_name")
+    private String originalName;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
