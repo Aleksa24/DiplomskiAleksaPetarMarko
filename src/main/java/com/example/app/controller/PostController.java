@@ -4,6 +4,7 @@ import com.example.app.dto.attachment.AttachmentDto;
 import com.example.app.dto.post.PostDto;
 import com.example.app.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -64,14 +65,14 @@ public class PostController {
 
     @GetMapping("{id}/file/{fileName}")
     public ResponseEntity<Resource> addLike(@PathVariable Long id,
-                                            @PathVariable String fileName) throws FileNotFoundException {
+                                            @PathVariable String fileName) throws IOException {
 
 
-        InputStreamResource resource = new InputStreamResource(new FileInputStream(this.postService.findFileByPostIdAndFileName(id, fileName)));
+        ByteArrayResource resource = this.postService.findFileByPostIdAndFileName(id, fileName);
 
         return ResponseEntity.ok()
-                .contentLength(this.postService.findFileByPostIdAndFileName(id, fileName).length())
-                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .contentLength(this.postService.findFileByPostIdAndFileName(id, fileName).getByteArray().length)
+                .contentType(MediaType.APPLICATION_PDF)
                 .body(resource);
     }
 

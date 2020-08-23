@@ -12,6 +12,7 @@ import com.example.app.repository.PostRepository;
 import com.example.app.repository.UserRepository;
 import com.example.app.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -98,13 +99,18 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public File findFileByPostIdAndFileName(Long postId, String fileName) throws FileNotFoundException {
+    public ByteArrayResource findFileByPostIdAndFileName(Long postId, String fileName) throws IOException {
         System.out.println(POST_FOLDER + postId + File.separator +"attachments" + File.separator + fileName);
         File file = new File(POST_FOLDER + postId + File.separator +"attachments" + File.separator + fileName);
         if(!file.exists()){
             throw new FileNotFoundException("Requested file not found");
         }
-        return file;
+
+        Path path = Paths.get(file.getAbsolutePath());
+        ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
+
+
+        return resource;
     }
 }
 

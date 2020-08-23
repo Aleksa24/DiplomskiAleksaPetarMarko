@@ -2,6 +2,7 @@ package com.example.app.service;
 
 import com.example.app.dto.attachment.AttachmentDto;
 import com.example.app.dto.post.PostDto;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -21,5 +22,5 @@ public interface PostService {
 
     AttachmentDto addAttachment(Long postId,Long userId, MultipartFile file) throws IOException;
 
-    File findFileByPostIdAndFileName(Long id, String fileName) throws FileNotFoundException;
+    ByteArrayResource findFileByPostIdAndFileName(Long id, String fileName) throws IOException;
 }
