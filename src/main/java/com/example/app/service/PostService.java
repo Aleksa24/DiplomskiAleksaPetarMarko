@@ -23,4 +23,6 @@ public interface PostService {
     AttachmentDto addAttachment(Long postId,Long userId, MultipartFile file) throws IOException;
 
     ByteArrayResource findFileByPostIdAndFileName(Long id, String fileName) throws IOException;
+
+    String removePostAttachmentById(Long postId, Long attachmentId);
 }

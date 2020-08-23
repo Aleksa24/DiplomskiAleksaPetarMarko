@@ -2,6 +2,7 @@ package com.example.app.controller;
 
 import com.example.app.dto.attachment.AttachmentDto;
 import com.example.app.dto.post.PostDto;
+import com.example.app.entity.HttpResponse;
 import com.example.app.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -72,8 +73,20 @@ public class PostController {
 
         return ResponseEntity.ok()
                 .contentLength(this.postService.findFileByPostIdAndFileName(id, fileName).getByteArray().length)
-                .contentType(MediaType.APPLICATION_PDF)
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
                 .body(resource);
+    }
+
+    @DeleteMapping("{postId}/attachment/{attachmentId}/delete")
+    public ResponseEntity<HttpResponse> removeAttachment(@PathVariable Long postId, @PathVariable Long attachmentId) throws IOException {
+
+        String attachmentDeleteMessage = postService.removePostAttachmentById(postId, attachmentId);
+
+        HttpResponse response = new HttpResponse(200, HttpStatus.OK, "DELETED_FILE", attachmentDeleteMessage);
+
+        return ResponseEntity.ok()
+                .body(response);
+
     }
 
 }
