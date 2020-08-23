@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
@@ -93,6 +95,16 @@ public class PostServiceImpl implements PostService {
         postRepository.save(post);
         Attachment attachmentWithId = attachmentRepository.findByUrl(newAttachment.getUrl()).get();
         return attachmentMapper.toDto(attachmentWithId);
+    }
+
+    @Override
+    public File findFileByPostIdAndFileName(Long postId, String fileName) throws FileNotFoundException {
+        System.out.println(POST_FOLDER + postId + File.separator +"attachments" + File.separator + fileName);
+        File file = new File(POST_FOLDER + postId + File.separator +"attachments" + File.separator + fileName);
+        if(!file.exists()){
+            throw new FileNotFoundException("Requested file not found");
+        }
+        return file;
     }
 }
 
