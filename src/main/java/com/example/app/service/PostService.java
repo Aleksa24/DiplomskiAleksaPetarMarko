@@ -5,8 +5,6 @@ import com.example.app.dto.post.PostDto;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -25,4 +23,5 @@ public interface PostService {
     ByteArrayResource findFileByPostIdAndFileName(Long id, String fileName) throws IOException;
 
     String removePostAttachmentById(Long postId, Long attachmentId);
+
 }
