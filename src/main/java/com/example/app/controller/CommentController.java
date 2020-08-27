@@ -40,5 +40,9 @@ public class CommentController {
     public CommentDto addLike(@RequestBody CommentDto commentDto){
         return this.commentService.save(commentDto);
     }
+    @PostMapping("/save")
+    public CommentDto save(@RequestBody CommentDto commentDto){
+        return this.commentService.save(commentDto);
+    }
 
 }
