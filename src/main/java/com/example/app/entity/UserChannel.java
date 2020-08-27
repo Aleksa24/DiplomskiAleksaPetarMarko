@@ -26,7 +26,7 @@ public class UserChannel {
     @JoinColumn(name = "channel_role_id")
     private ChannelRole channelRole;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
 

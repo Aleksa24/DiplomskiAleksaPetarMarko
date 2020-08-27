@@ -31,7 +31,6 @@ public class ChannelController {
 
     @PostMapping("/save")
     public ChannelDto save(@RequestBody ChannelDto channelDto){
-        System.out.println("channel/save:");
         return channelService.save(channelDto);
     }
 }

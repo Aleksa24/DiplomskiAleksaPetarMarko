@@ -34,6 +34,6 @@ public class ChannelServiceImpl implements ChannelService {
 
     @Override
     public ChannelDto save(ChannelDto channelDto) {
-        return channelMapper.toDto(channelRepository.save(channelMapper.toEntity(channelDto)));
+        return null;
     }
 }

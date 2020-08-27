@@ -46,7 +46,7 @@ public class Channel {
     @JoinColumn(name = "channel_id")
     private List<Attachment> attachments;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "channel_id")
     private List<UserChannel> userChannels;
 
