@@ -1,5 +1,6 @@
 package com.example.app.exception.post;
 
+import com.example.app.entity.HttpResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +17,9 @@ public class PostExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({FileAlreadyExistsException.class})
     public ResponseEntity<Object> fileAlreadyExists(FileAlreadyExistsException e, WebRequest webRequest){
-        return handleExceptionInternal(e,e.getMessage(), new HttpHeaders(), HttpStatus.OK, webRequest);
+        return handleExceptionInternal(e,e.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST, webRequest);
     }
+
     @ExceptionHandler({FileNotFoundException.class})
     public ResponseEntity<Object> fileNotFound(FileAlreadyExistsException e, WebRequest webRequest){
         return handleExceptionInternal(e,e.getMessage(), new HttpHeaders(), HttpStatus.OK, webRequest);
