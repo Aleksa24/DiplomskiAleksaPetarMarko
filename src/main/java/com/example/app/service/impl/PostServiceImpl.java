@@ -71,63 +71,6 @@ public class PostServiceImpl implements PostService {
         return postMapper.toDto(postRepository.save(postMapper.toEntity(postDto)));//todo: odraditi validaciju i sve sto treba, bacanje greske ako nema post
     }
 
-    @Override
-    public AttachmentDto addAttachment(Long postId,Long userId, MultipartFile file) throws IOException {
-        Post post = postRepository.findById(postId).get();
-        User user = userRepository.findById(userId).get();
-        Attachment newAttachment = new Attachment();
-        newAttachment.setUser(user);
-        newAttachment.setOriginalName(file.getOriginalFilename());
-
-        Path postFolder = Paths.get(POST_FOLDER+postId+"/attachments");
-        if (!Files.exists(postFolder)){
-            Files.createDirectories(postFolder);
-        }
-        newAttachment.setUrl(postFolder.resolve(file.getOriginalFilename()).toAbsolutePath().toString());
-        System.out.println("new Attachment postFolder.toAbsolutePath().toString(): " + newAttachment.getUrl());
-
-        if (Files.exists(postFolder.resolve(file.getOriginalFilename()))) {
-            throw new FileAlreadyExistsException("Fajl " + file.getOriginalFilename() + " vec postoji!!!");
-        }
-        Files.copy(file.getInputStream(),
-                postFolder.resolve(file.getOriginalFilename()));
-
-        post.getAttachments().add(newAttachment);
-        postRepository.save(post);
-        Attachment attachmentWithId = attachmentRepository.findByUrl(newAttachment.getUrl()).get();
-        return attachmentMapper.toDto(attachmentWithId);
-    }
-
-    @Override
-    public ByteArrayResource findFileByPostIdAndFileName(Long postId, String fileName) throws IOException {
-        System.out.println(POST_FOLDER + postId + File.separator +"attachments" + File.separator + fileName);
-        File file = new File(POST_FOLDER + postId + File.separator +"attachments" + File.separator + fileName);
-        if(!file.exists()){
-            throw new FileNotFoundException("Requested file not found");
-        }
-
-        Path path = Paths.get(file.getAbsolutePath());
-        ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
-
-
-        return resource;
-    }
-
-    @Override
-    public String removePostAttachmentById(Long postId, Long attachmentId) {
-        Attachment attachment = attachmentRepository.findById(attachmentId).orElseThrow(
-                () ->  new RuntimeException() // TODO: Attachment not found exception
-        );
-        File file = new File(POST_FOLDER + postId + File.separator +"attachments" + File.separator + attachment.getOriginalName());
-        boolean deleteSignal = file.delete();
-        if(!deleteSignal){
-          throw new RuntimeException("File not deleted."); // TODO: Attachment not deleted exception
-        }
-        attachmentRepository.deleteById(attachmentId);
-        return "Attachment successfully removed.";
-    }
-
-
 
 }
 

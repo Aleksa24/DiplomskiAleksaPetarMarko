@@ -52,36 +52,6 @@ public class PostController {
         return this.postService.save(postDto);
     }
 
-    @PostMapping("/addAttachment")
-    public AttachmentDto addAttachment(@RequestParam MultipartFile file,
-                                       @RequestParam Long postId,
-                                       @RequestParam Long userId) throws IOException {
-        return postService.addAttachment(postId,userId,file);
-    }
-
-    @GetMapping("{id}/file/{fileName}")
-    public ResponseEntity<Resource> addLike(@PathVariable Long id,
-                                            @PathVariable String fileName) throws IOException {
-
-
-        ByteArrayResource resource = this.postService.findFileByPostIdAndFileName(id, fileName);
-
-        return ResponseEntity.ok()
-                .contentLength(this.postService.findFileByPostIdAndFileName(id, fileName).getByteArray().length)
-                .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                .body(resource);
-    }
-
-    @DeleteMapping("{postId}/attachment/{attachmentId}/delete")
-    public ResponseEntity<HttpResponse> removeAttachment(@PathVariable Long postId, @PathVariable Long attachmentId) throws IOException {
-
-        String attachmentDeleteMessage = postService.removePostAttachmentById(postId, attachmentId);
-
-        HttpResponse response = new HttpResponse(200, HttpStatus.OK, "DELETED_FILE", attachmentDeleteMessage);
-
-        return ResponseEntity.ok()
-                .body(response);
-    }
 
 }
 
