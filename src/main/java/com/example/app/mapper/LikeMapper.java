@@ -6,10 +6,13 @@ import com.example.app.entity.Like;
 import com.example.app.entity.LikeStatus;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {UserMapper.class})
+@Mapper(componentModel = "spring",
+        uses = {UserMapper.class, PostMapper.class,CommentMapper.class},
+        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.SET_TO_NULL)
 public interface LikeMapper {
 
     LikeDto toDto(Like like);

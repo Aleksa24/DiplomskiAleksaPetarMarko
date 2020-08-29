@@ -6,6 +6,7 @@ import com.example.app.dto.comment.CommentStatusDto;
 import com.example.app.dto.like.LikeStatusDto;
 import com.example.app.exception.comment.CommentNotFountException;
 import com.example.app.mapper.CommentMapper;
+import com.example.app.mapper.LikeMapper;
 import com.example.app.repository.CommentRepository;
 import com.example.app.repository.CommentStatusRepository;
 import com.example.app.repository.LikeStatusRepository;
@@ -18,16 +19,19 @@ public class CommentServiceImpl implements CommentService {
 
     private final CommentRepository commentRepository;
     private final CommentMapper commentMapper;
+    private final LikeMapper likeMapper;
     private final CommentStatusRepository commentStatusRepository;
     private final LikeStatusRepository likeStatusRepository;
 
     @Autowired
     public CommentServiceImpl(CommentRepository commentRepository,
                               CommentMapper commentMapper,
+                              LikeMapper likeMapper,
                               CommentStatusRepository commentStatusRepository,
                               LikeStatusRepository likeStatusRepository) {
         this.commentRepository = commentRepository;
         this.commentMapper = commentMapper;
+        this.likeMapper = likeMapper;
         this.commentStatusRepository = commentStatusRepository;
         this.likeStatusRepository = likeStatusRepository;
     }
@@ -51,6 +55,6 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public LikeStatusDto findLikeStatusByName(String likeStatusString) {
-        return commentMapper.toLikeStatusDto(likeStatusRepository.findByName(likeStatusString).get());//todo: odradi greske
+        return likeMapper.toStatusDto(likeStatusRepository.findByName(likeStatusString).get());//todo: odradi greske
     }
 }
