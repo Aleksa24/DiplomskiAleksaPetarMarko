@@ -112,6 +112,23 @@ public class PostServiceImpl implements PostService {
 
         return resource;
     }
+
+    @Override
+    public String removePostAttachmentById(Long postId, Long attachmentId) {
+        Attachment attachment = attachmentRepository.findById(attachmentId).orElseThrow(
+                () ->  new RuntimeException() // TODO: Attachment not found exception
+        );
+        File file = new File(POST_FOLDER + postId + File.separator +"attachments" + File.separator + attachment.getOriginalName());
+        boolean deleteSignal = file.delete();
+        if(!deleteSignal){
+          throw new RuntimeException("File not deleted."); // TODO: Attachment not deleted exception
+        }
+        attachmentRepository.deleteById(attachmentId);
+        return "Attachment successfully removed.";
+    }
+
+
+
 }
 
 
