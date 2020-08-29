@@ -35,7 +35,7 @@ public class Comment {
     @LastModifiedDate
     private Date dateLastModified;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
@@ -43,15 +43,15 @@ public class Comment {
     @JoinColumn(name = "comment_status_id")
     private CommentStatus commentStatus;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "comment_id")
     private List<Like> likes;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "comment_id")
     private List<Attachment> attachments;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "comment_id")
     private List<Comment> comments;
 
