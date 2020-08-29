@@ -26,11 +26,11 @@ public class UserChannel {
     @CreatedDate
     private Date dateJoined;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     @JoinColumn(name = "channel_role_id")
     private ChannelRole channelRole;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 

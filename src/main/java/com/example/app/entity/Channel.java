@@ -30,7 +30,7 @@ public class Channel {
     @CreatedDate
     private Date dateCreated;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
 
@@ -50,7 +50,7 @@ public class Channel {
     @JoinColumn(name = "channel_id")
     private List<Attachment> attachments;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     @JoinColumn(name = "channel_id")
     private List<UserChannel> userChannels;
 
