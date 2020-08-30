@@ -13,8 +13,6 @@ public interface AttachmentService {
 
     AttachmentDto add(AttachmentUploadDataDto attachmentUploadDataDto) throws IOException;
 
-    AttachmentUploadDataDto resolveParent(String attachmentParentName, Long attachmentParentId, MultipartFile file) throws IOException;
-
     AttachmentParent resolveParent(String attachmentParentName);
 
     String deleteById(Long id);

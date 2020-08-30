@@ -79,49 +79,6 @@ public class AttachmentServiceImpl implements AttachmentService {
         return attachmentMapper.toDto(savedAttachment);
     }
 
-    @Override
-    public AttachmentUploadDataDto resolveParent(String attachmentParentName, Long attachmentParentId, MultipartFile file) throws IOException {
-        AttachmentUploadDataDto result = new AttachmentUploadDataDto();
-
-        Path folder = null;
-        switch (attachmentParentName) {
-            case AttachmentParentConstant
-                    .POST -> {
-                result.setPostId(attachmentParentId);
-                folder = Paths.get(POST_FOLDER + attachmentParentId + File.separator +"attachments");
-                result.setFileCreationPath(folder.resolve(file.getOriginalFilename()).toAbsolutePath().toString());
-                result.setOriginalFileName(file.getOriginalFilename());
-            }
-            case AttachmentParentConstant
-                    .CHANNEL -> {
-                result.setChannelId(attachmentParentId);
-                folder = Paths.get(CHANNEL_FOLDER + attachmentParentId + File.separator +"attachments");
-                result.setFileCreationPath(folder.resolve(file.getOriginalFilename()).toAbsolutePath().toString());
-                result.setOriginalFileName(file.getOriginalFilename());
-            }
-            case AttachmentParentConstant
-                    .COMMENT -> {
-                result.setCommentId(attachmentParentId);
-                folder = Paths.get(COMMENT_FOLDER + attachmentParentId + File.separator +"attachments");
-                result.setFileCreationPath(folder.resolve(file.getOriginalFilename()).toAbsolutePath().toString());
-                result.setOriginalFileName(file.getOriginalFilename());
-            }
-            default -> throw new IllegalStateException("Invalid attachment parent");
-        }
-
-        if (!Files.exists(folder)){
-            Files.createDirectories(folder);
-        }
-
-        if (Files.exists(folder.resolve(file.getOriginalFilename()))) {
-            throw new FileAlreadyExistsException("Fajl " + file.getOriginalFilename() + " vec postoji!!!");
-        }
-
-        Files.copy(file.getInputStream(),
-                folder.resolve(file.getOriginalFilename()));
-
-        return  result;
-    }
 
     @Override
     public AttachmentParent resolveParent(String attachmentParentName) {
@@ -138,13 +95,14 @@ public class AttachmentServiceImpl implements AttachmentService {
                     .COMMENT -> {
                 return AttachmentParent.COMMENT;
             }
-            default -> throw new IllegalStateException("Invalid attachment parent");
+            default -> throw new IllegalArgumentException("Invalid attachment parent");
         }
     }
 
     @Override
     public String deleteById(Long id) {
-        return null;
+        attachmentRepository.deleteById(id);
+        return "Attachment successfully deleted";
     }
 
     @Override

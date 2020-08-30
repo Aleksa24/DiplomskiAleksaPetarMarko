@@ -49,10 +49,13 @@ public enum AttachmentParent {
         }
     };
 
+    protected abstract String getFolderPath();
+    protected abstract AttachmentUploadDataDto createAttachmentUploadDataWithParentId(Long parentId);
+
+
     public AttachmentUploadDataDto createAttachmentUploadData(Long parentId, MultipartFile file){
         AttachmentUploadDataDto result = createAttachmentUploadDataWithParentId(parentId);
 
-        result.setPostId(parentId);
         Path folder = Paths.get(getFolderPath() + parentId + File.separator +"attachments");
         result.setFileCreationPath(folder.resolve(file.getOriginalFilename()).toAbsolutePath().toString());
         result.setOriginalFileName(file.getOriginalFilename());
@@ -79,10 +82,6 @@ public enum AttachmentParent {
         Files.copy(file.getInputStream(),
                 folder.resolve(file.getOriginalFilename()));
     }
-
-    protected abstract String getFolderPath();
-    protected abstract AttachmentUploadDataDto createAttachmentUploadDataWithParentId(Long parentId);
-
 
     public ByteArrayResource findFileByParentIdAndFileName(Long parentId, String fileName) throws IOException {
         System.out.println(getFolderPath() + parentId + File.separator +"attachments" + File.separator + fileName);
