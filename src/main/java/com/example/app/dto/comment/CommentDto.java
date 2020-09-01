@@ -26,5 +26,6 @@ public class CommentDto {
     private List<AttachmentDto> attachments;
     private List<CommentDto> comments;
     private PostShortDto post;
+    private CommentShortDto comment;
 
 }
