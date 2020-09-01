@@ -47,7 +47,7 @@ public class Comment {
     @JoinColumn(name = "comment_id")
     private List<Like> likes;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "comment_id")
     private List<Attachment> attachments;
 
