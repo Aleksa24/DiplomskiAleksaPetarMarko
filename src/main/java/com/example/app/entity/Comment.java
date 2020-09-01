@@ -35,6 +35,10 @@ public class Comment {
     @LastModifiedDate
     private Date dateLastModified;
 
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    private Post post;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -51,7 +55,7 @@ public class Comment {
     @JoinColumn(name = "comment_id")
     private List<Attachment> attachments;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "comment_id")
     private List<Comment> comments;
 

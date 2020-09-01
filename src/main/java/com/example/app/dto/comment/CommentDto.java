@@ -2,6 +2,7 @@ package com.example.app.dto.comment;
 
 import com.example.app.dto.attachment.AttachmentDto;
 import com.example.app.dto.like.LikeDto;
+import com.example.app.dto.post.PostShortDto;
 import com.example.app.dto.user.UserShortDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,5 +25,6 @@ public class CommentDto {
     private List<LikeDto> likes;
     private List<AttachmentDto> attachments;
     private List<CommentDto> comments;
+    private PostShortDto post;
 
 }

@@ -45,7 +45,7 @@ public class Post {
     @JoinColumn(name = "post_id")
     private List<Like> likes;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     private List<Comment> comments;
 
