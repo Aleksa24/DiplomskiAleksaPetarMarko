@@ -33,4 +33,9 @@ public class ChannelController {
     public ChannelDto save(@RequestBody ChannelDto channelDto){
         return channelService.save(channelDto);
     }
+
+    @GetMapping("/findAllByUserId")
+    public List<ChannelShortDto> findAllByUserId(@RequestParam("id") Long id){
+        return  channelService.findAllByUserId(id);
+    }
 }

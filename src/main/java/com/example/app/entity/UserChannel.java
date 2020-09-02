@@ -30,8 +30,11 @@ public class UserChannel {
     @JoinColumn(name = "channel_role_id")
     private ChannelRole channelRole;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "channel_id")
+    private Channel channel;
 }

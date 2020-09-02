@@ -12,4 +12,6 @@ public interface ChannelService {
     ChannelDto findById(Long id);
 
     ChannelDto save(ChannelDto channelDto);
+
+    List<ChannelShortDto> findAllByUserId(Long id);
 }
