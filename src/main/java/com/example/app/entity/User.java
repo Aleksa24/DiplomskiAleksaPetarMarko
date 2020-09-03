@@ -54,6 +54,9 @@ public class User implements Serializable {
     @Column(name = "is_account_non_locked")
     private boolean isAccountNonLocked;
 
+    @Column(name = "profile_picture")
+    private String profilePictureUrl;
+
     @ManyToOne
     @JoinColumn(name = "user_role_id")
     private UserRole role;

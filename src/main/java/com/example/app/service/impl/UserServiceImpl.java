@@ -1,7 +1,9 @@
 package com.example.app.service.impl;
 
+import com.example.app.constants.FileConstant;
 import com.example.app.dto.user.UserDto;
 import com.example.app.entity.User;
+import com.example.app.exception.ChannelNotFoundException;
 import com.example.app.exception.user.UserNotFoundException;
 import com.example.app.mapper.UserMapper;
 import com.example.app.repository.UserRepository;
@@ -9,13 +11,22 @@ import com.example.app.repository.UserRoleRepository;
 import com.example.app.security.user.UserPrincipal;
 import com.example.app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
 
@@ -101,6 +112,49 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public Long totalCount() {
         return userRepository.count();
+    }
+
+    @Override
+    public ByteArrayResource findProfilePictureById(Long id) throws IOException {
+        String pictureUrl = userRepository.findById(id).orElseThrow(
+                () -> new ChannelNotFoundException("Channel with id " + id + " not found.")
+        ).getProfilePictureUrl();
+
+        File file = new File(pictureUrl);
+
+        if (!file.exists()){
+            throw new FileNotFoundException("The requested file not found");
+        }
+        Path path = Paths.get(file.getAbsolutePath());
+
+        return new ByteArrayResource(Files.readAllBytes(path));
+    }
+
+    @Override
+    public String uploadProfileImage(Long id, MultipartFile profileImage) throws IOException {
+
+        User user = userRepository.findById(id).orElseThrow(
+                () -> new UserNotFoundException("User with id " + id + " not found")
+        );
+
+        Path folder = Paths.get(FileConstant.USER_FOLDER + id + File.separator +"profile");
+
+        if (!Files.exists(folder)){
+            Files.createDirectories(folder);
+        }
+
+        // TODO? FileUtils clearDirectory
+
+        user.setProfilePictureUrl(folder.resolve(profileImage.getOriginalFilename()).toAbsolutePath().toString());
+
+        Files.deleteIfExists(folder.resolve(profileImage.getOriginalFilename()));
+
+        Files.copy(profileImage.getInputStream(),
+                folder.resolve(profileImage.getOriginalFilename()));
+
+        userRepository.save(user);
+
+        return "Profile picture is saved";
     }
 
     @Override

@@ -26,6 +26,9 @@ public class Channel {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "profile_picture_url")
+    private String profilePictureUrl;
+
     @Column(name = "date_created")
     @CreatedDate
     private Date dateCreated;

@@ -2,8 +2,12 @@ package com.example.app.service;
 
 
 import com.example.app.dto.user.UserDto;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 public interface UserService {
@@ -25,4 +29,8 @@ public interface UserService {
     List<UserDto> findAllPagination(Pageable pageable);
 
     Long totalCount();
+
+    ByteArrayResource findProfilePictureById(Long id) throws IOException;
+
+    String uploadProfileImage(Long id, MultipartFile profileImage) throws IOException;
 }

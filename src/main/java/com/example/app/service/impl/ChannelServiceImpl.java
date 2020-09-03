@@ -3,13 +3,21 @@ package com.example.app.service.impl;
 import com.example.app.dto.channel.ChannelDto;
 import com.example.app.dto.channel.ChannelShortDto;
 import com.example.app.entity.UserChannel;
+import com.example.app.exception.ChannelNotFoundException;
 import com.example.app.mapper.ChannelMapper;
 import com.example.app.repository.ChannelRepository;
 import com.example.app.repository.UserChannelRepository;
 import com.example.app.service.ChannelService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -52,5 +60,21 @@ public class ChannelServiceImpl implements ChannelService {
         return channelMapper.toShortDtoList(userChannels.stream()
                 .flatMap(userChannel -> Stream.of(userChannel.getChannel()))
                 .collect(Collectors.toList()));
+    }
+
+    @Override
+    public ByteArrayResource findProfilePictureById(Long id) throws IOException {
+        String pictureUrl = channelRepository.findById(id).orElseThrow(
+                () -> new ChannelNotFoundException("Channel with id " + id + " not found.")
+        ).getProfilePictureUrl();
+
+        File file = new File(pictureUrl);
+
+        if (!file.exists()){
+           throw new FileNotFoundException("The requested file not found");
+        }
+        Path path = Paths.get(file.getAbsolutePath());
+
+        return new ByteArrayResource(Files.readAllBytes(path));
     }
 }
