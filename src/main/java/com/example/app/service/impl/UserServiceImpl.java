@@ -65,7 +65,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public UserDto save(UserDto userDto) {
-        return userMapper.toDto(userRepository.save(userMapper.toEntity(userDto)));
+        User user = userMapper.toEntity(userDto);
+        user.setProfilePictureUrl(userRepository.findById(userDto.getId()).orElseThrow(
+                () -> new UserNotFoundException("User with id " + userDto.getId() + " not found")
+        ).getProfilePictureUrl());
+        return userMapper.toDto(userRepository.save(user));
     }
 
     @Override
@@ -117,7 +121,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public ByteArrayResource findProfilePictureById(Long id) throws IOException {
         String pictureUrl = userRepository.findById(id).orElseThrow(
-                () -> new ChannelNotFoundException("Channel with id " + id + " not found.")
+                () -> new UserNotFoundException("User with id " + id + " not found.")
         ).getProfilePictureUrl();
 
         File file = new File(pictureUrl);
