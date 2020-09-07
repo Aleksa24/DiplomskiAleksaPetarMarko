@@ -3,19 +3,14 @@ package com.example.app.service.impl;
 import com.example.app.constants.FileConstant;
 import com.example.app.dto.user.UserDto;
 import com.example.app.entity.User;
-import com.example.app.exception.ChannelNotFoundException;
 import com.example.app.exception.user.UserNotFoundException;
 import com.example.app.mapper.UserMapper;
 import com.example.app.repository.UserRepository;
 import com.example.app.repository.UserRoleRepository;
-import com.example.app.security.user.UserPrincipal;
 import com.example.app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -33,7 +27,7 @@ import java.util.List;
 import static com.example.app.constants.Constants.*;
 
 @Service
-public class UserServiceImpl implements UserService, UserDetailsService {
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
@@ -161,13 +155,4 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return "Profile picture is saved";
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException(
-                        String.format(USER_NOT_FOUND_BY_USERNAME, username)));
-//        validateLoginAttempt(user); TODO
-//        userRepository.save(user);
-        return new UserPrincipal(user);
-    }
 }
