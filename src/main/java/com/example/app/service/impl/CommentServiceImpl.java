@@ -1,6 +1,6 @@
 package com.example.app.service.impl;
 
-import com.example.app.constants.Constants;
+import com.example.app.constant.ExceptionConstant;
 import com.example.app.dto.comment.CommentDto;
 import com.example.app.dto.comment.CommentStatusDto;
 import com.example.app.dto.like.LikeStatusDto;
@@ -40,7 +40,7 @@ public class CommentServiceImpl implements CommentService {
     public CommentDto findById(Long id) {
         return commentMapper.toDto(commentRepository.findById(id)
                 .orElseThrow(() -> new CommentNotFountException(
-                        String.format(Constants.COMMENT_NOT_FOUND_BY_ID, id))));
+                        String.format(ExceptionConstant.COMMENT_NOT_FOUND_BY_ID, id))));
     }
 
     @Override

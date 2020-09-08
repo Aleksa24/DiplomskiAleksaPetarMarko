@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.example.app.constants.CorsConstant.*;
+import static com.example.app.constant.CorsConstant.*;
 
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)

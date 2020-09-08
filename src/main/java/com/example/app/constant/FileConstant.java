@@ -1,4 +1,4 @@
-package com.example.app.constants;
+package com.example.app.constant;
 
 import java.io.File;
 

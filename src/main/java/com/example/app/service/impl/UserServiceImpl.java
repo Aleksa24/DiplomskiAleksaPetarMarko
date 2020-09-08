@@ -1,6 +1,6 @@
 package com.example.app.service.impl;
 
-import com.example.app.constants.FileConstant;
+import com.example.app.constant.FileConstant;
 import com.example.app.dto.user.UserDto;
 import com.example.app.entity.User;
 import com.example.app.exception.user.UserNotFoundException;
@@ -24,7 +24,7 @@ import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
 
-import static com.example.app.constants.Constants.*;
+import static com.example.app.constant.ExceptionConstant.*;
 
 @Service
 public class UserServiceImpl implements UserService {

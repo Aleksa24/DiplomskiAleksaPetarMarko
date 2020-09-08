@@ -9,7 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.io.File;
 
-import static com.example.app.constants.FileConstant.*;
+import static com.example.app.constant.FileConstant.*;
 
 @SpringBootApplication
 @EnableJpaAuditing

@@ -1,10 +1,7 @@
 package com.example.app.service.impl;
 
-import com.example.app.dto.attachment.AttachmentDto;
 import com.example.app.dto.post.PostDto;
-import com.example.app.entity.Attachment;
 import com.example.app.entity.Post;
-import com.example.app.entity.User;
 import com.example.app.mapper.AttachmentMapper;
 import com.example.app.mapper.AttachmentRepository;
 import com.example.app.mapper.PostMapper;
@@ -12,20 +9,9 @@ import com.example.app.repository.PostRepository;
 import com.example.app.repository.UserRepository;
 import com.example.app.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ByteArrayResource;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.file.FileAlreadyExistsException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
-
-import static com.example.app.constants.FileConstant.POST_FOLDER;
 
 @Service
 public class PostServiceImpl implements PostService {

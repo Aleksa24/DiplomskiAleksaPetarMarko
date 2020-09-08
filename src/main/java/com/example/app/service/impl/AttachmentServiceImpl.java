@@ -1,8 +1,7 @@
 package com.example.app.service.impl;
 
 import com.example.app.attachment.AttachmentParent;
-import com.example.app.constants.AttachmentParentConstant;
-import com.example.app.constants.FileConstant;
+import com.example.app.constant.AttachmentParentConstant;
 import com.example.app.dto.attachment.AttachmentDto;
 import com.example.app.dto.attachment.AttachmentUploadDataDto;
 import com.example.app.entity.*;
@@ -14,19 +13,9 @@ import com.example.app.repository.CommentRepository;
 import com.example.app.repository.PostRepository;
 import com.example.app.repository.UserRepository;
 import com.example.app.service.AttachmentService;
-import org.springframework.core.io.ByteArrayResource;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.FileAlreadyExistsException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
-import static com.example.app.constants.FileConstant.*;
 
 @Service
 public class AttachmentServiceImpl implements AttachmentService {
