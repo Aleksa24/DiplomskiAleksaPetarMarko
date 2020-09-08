@@ -33,23 +33,27 @@ public class Channel {
     @CreatedDate
     private Date dateCreated;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "channel_status_id")
     private ChannelStatus channelStatus;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "communication_direction_id")
     private CommunicationDirection communicationDirection;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "channel_id")
     private List<Channel> channels;
 
-    @OneToMany
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "channel_id")
+    private Channel parentChannel;
+
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "channel_id")
     private List<Attachment> attachments;
 
@@ -57,7 +61,7 @@ public class Channel {
     @JoinColumn(name = "channel_id")
     private List<UserChannel> userChannels;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "channel_id")
     private List<Post> posts;
 

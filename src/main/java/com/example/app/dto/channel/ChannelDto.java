@@ -24,5 +24,6 @@ public class ChannelDto {
     private List<AttachmentDto> attachments;
     private List<UserChannelDto> userChannels;
     private List<PostShortDto> posts;
+    private ChannelShortDto parentChannel;
 
 }
