@@ -1,12 +1,9 @@
 package com.example.app.controller;
 
 import com.example.app.attachment.AttachmentParent;
-import com.example.app.constants.AttachmentParentConstant;
-import com.example.app.constants.FileConstant;
 import com.example.app.dto.attachment.AttachmentDto;
 import com.example.app.dto.attachment.AttachmentUploadDataDto;
-import com.example.app.entity.Attachment;
-import com.example.app.entity.HttpResponse;
+import com.example.app.http.HttpResponse;
 import com.example.app.service.AttachmentService;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;

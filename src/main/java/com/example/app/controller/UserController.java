@@ -1,10 +1,7 @@
 package com.example.app.controller;
 
-import com.example.app.attachment.AttachmentParent;
-import com.example.app.dto.attachment.AttachmentDto;
-import com.example.app.dto.attachment.AttachmentUploadDataDto;
 import com.example.app.dto.user.UserDto;
-import com.example.app.entity.HttpResponse;
+import com.example.app.http.HttpResponse;
 import com.example.app.service.UserService;
 import com.example.app.validator.user.groups.Add;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +15,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-
 import java.io.IOException;
 import java.util.List;
 
@@ -31,6 +27,11 @@ public class UserController {
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
+    }
+
+    @GetMapping("find-by-username")
+    public UserDto findByUsername(@RequestParam("username") String username) {
+        return userService.findByUsername(username);
     }
 
     @GetMapping("/{id}")

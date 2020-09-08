@@ -1,7 +1,7 @@
 package com.example.app.controller;
 
 import com.example.app.dto.like.LikeDto;
-import com.example.app.entity.HttpResponse;
+import com.example.app.http.HttpResponse;
 import com.example.app.service.LikeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

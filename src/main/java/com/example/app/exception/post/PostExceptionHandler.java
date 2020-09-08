@@ -1,6 +1,5 @@
 package com.example.app.exception.post;
 
-import com.example.app.entity.HttpResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
