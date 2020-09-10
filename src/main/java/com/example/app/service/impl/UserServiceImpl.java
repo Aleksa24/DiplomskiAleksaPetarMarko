@@ -2,6 +2,7 @@ package com.example.app.service.impl;
 
 import com.example.app.constant.FileConstant;
 import com.example.app.dto.user.UserDto;
+import com.example.app.dto.user.UserShortDto;
 import com.example.app.entity.User;
 import com.example.app.exception.user.UserNotFoundException;
 import com.example.app.mapper.UserMapper;
@@ -10,6 +11,7 @@ import com.example.app.repository.UserRoleRepository;
 import com.example.app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -103,13 +105,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDto> findAllPagination(Pageable pageable) {
-        return userMapper.toDtoList(userRepository.findAll(pageable).getContent());
-    }
-
-    @Override
-    public Long totalCount() {
-        return userRepository.count();
+    public Page<UserShortDto> findAllPagination(Pageable pageable) {
+        return userRepository.findAll(pageable).map(userMapper::toShortDto);
     }
 
     @Override
@@ -120,7 +117,7 @@ public class UserServiceImpl implements UserService {
 
         File file = new File(pictureUrl);
 
-        if (!file.exists()){
+        if (!file.exists()) {
             throw new FileNotFoundException("The requested file not found");
         }
         Path path = Paths.get(file.getAbsolutePath());
@@ -135,9 +132,9 @@ public class UserServiceImpl implements UserService {
                 () -> new UserNotFoundException("User with id " + id + " not found")
         );
 
-        Path folder = Paths.get(FileConstant.USER_FOLDER + id + File.separator +"profile");
+        Path folder = Paths.get(FileConstant.USER_FOLDER + id + File.separator + "profile");
 
-        if (!Files.exists(folder)){
+        if (!Files.exists(folder)) {
             Files.createDirectories(folder);
         }
 
