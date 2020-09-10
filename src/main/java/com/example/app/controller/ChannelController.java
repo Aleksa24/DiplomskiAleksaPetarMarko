@@ -2,13 +2,16 @@ package com.example.app.controller;
 
 import com.example.app.dto.channel.ChannelDto;
 import com.example.app.dto.channel.ChannelShortDto;
+import com.example.app.http.HttpResponse;
 import com.example.app.service.ChannelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -53,5 +56,19 @@ public class ChannelController {
                 .contentLength(resource.contentLength())
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
                 .body(resource);
+    }
+
+    @PostMapping("/upload-profile-image")
+    public ResponseEntity<HttpResponse> uploadProfileImage(
+            @RequestParam MultipartFile profileImage,
+            @RequestParam Long id
+    ) throws IOException {
+
+
+        String resultMessage = channelService.uploadProfileImage(id, profileImage);
+
+        return ResponseEntity
+                .ok()
+                .body(new HttpResponse(200, HttpStatus.OK, "PROFILE_IMAGE_CHANGED", resultMessage));
     }
 }

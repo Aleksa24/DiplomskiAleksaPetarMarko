@@ -9,6 +9,7 @@ import com.example.app.mapper.UserMapper;
 import com.example.app.repository.UserRepository;
 import com.example.app.repository.UserRoleRepository;
 import com.example.app.service.UserService;
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Page;
@@ -115,9 +116,9 @@ public class UserServiceImpl implements UserService {
                 () -> new UserNotFoundException("User with id " + id + " not found.")
         ).getProfilePictureUrl();
 
-        File file = new File(pictureUrl);
+        File file = new File(FileConstant.ASSETS_FOLDER + pictureUrl);
 
-        if (!file.exists()) {
+        if (!file.exists() || !file.isFile()) {
             throw new FileNotFoundException("The requested file not found");
         }
         Path path = Paths.get(file.getAbsolutePath());
@@ -132,23 +133,18 @@ public class UserServiceImpl implements UserService {
                 () -> new UserNotFoundException("User with id " + id + " not found")
         );
 
-
         System.out.println(System.getProperty("user.dir"));
 
-
-        Path folder = Paths.get(FileConstant.USER_FOLDER + File.separator + id + File.separator +"attachments");
-
-//        Path folder1 = Paths.get(ClassLoader.getSystemResource(FileConstant.USER_FOLDER + File.separator + id + File.separator + "profile").toURI());
+        Path folder = Paths.get(FileConstant.ASSETS_FOLDER + FileConstant.USER_FOLDER + File.separator + id + File.separator + FileConstant.PROFILE_FOLDER_NAME);
 
         if (!Files.exists(folder)) {
             Files.createDirectories(folder);
+        }else{
+            File file = folder.toFile();
+            FileUtils.cleanDirectory(file);
         }
 
-        // TODO? FileUtils clearDirectory
-
-        user.setProfilePictureUrl(folder.resolve(profileImage.getOriginalFilename()).toAbsolutePath().toString());
-
-        Files.deleteIfExists(folder.resolve(profileImage.getOriginalFilename()));
+        user.setProfilePictureUrl(FileConstant.USER_FOLDER + id + File.separator + FileConstant.PROFILE_FOLDER_NAME + File.separator + profileImage.getOriginalFilename());
 
         Files.copy(profileImage.getInputStream(),
                 folder.resolve(profileImage.getOriginalFilename()));

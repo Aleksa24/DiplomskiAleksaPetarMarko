@@ -1,16 +1,22 @@
 package com.example.app.service.impl;
 
+import com.example.app.constant.FileConstant;
 import com.example.app.dto.channel.ChannelDto;
 import com.example.app.dto.channel.ChannelShortDto;
+import com.example.app.entity.Channel;
+import com.example.app.entity.User;
 import com.example.app.entity.UserChannel;
 import com.example.app.exception.ChannelNotFoundException;
+import com.example.app.exception.user.UserNotFoundException;
 import com.example.app.mapper.ChannelMapper;
 import com.example.app.repository.ChannelRepository;
 import com.example.app.repository.UserChannelRepository;
 import com.example.app.service.ChannelService;
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -65,16 +71,45 @@ public class ChannelServiceImpl implements ChannelService {
     @Override
     public ByteArrayResource findProfilePictureById(Long id) throws IOException {
         String pictureUrl = channelRepository.findById(id).orElseThrow(
-                () -> new ChannelNotFoundException("Channel with id " + id + " not found.")
+                () -> new UserNotFoundException("User with id " + id + " not found.")
         ).getProfilePictureUrl();
 
-        File file = new File(pictureUrl);
+        File file = new File(FileConstant.ASSETS_FOLDER + pictureUrl);
 
-        if (!file.exists()){
-           throw new FileNotFoundException("The requested file not found");
+        if (!file.exists() || !file.isFile()) {
+            throw new FileNotFoundException("The requested file not found");
         }
         Path path = Paths.get(file.getAbsolutePath());
 
         return new ByteArrayResource(Files.readAllBytes(path));
+
+    }
+
+    @Override
+    public String uploadProfileImage(Long id, MultipartFile profileImage) throws IOException {
+
+        Channel channel = channelRepository.findById(id).orElseThrow(
+                () -> new UserNotFoundException("Channel with id " + id + " not found")
+        );
+
+        System.out.println(FileConstant.ASSETS_FOLDER + FileConstant.CHANNEL_FOLDER + File.separator + id + File.separator + FileConstant.PROFILE_FOLDER_NAME);
+
+        Path folder = Paths.get(FileConstant.ASSETS_FOLDER + FileConstant.CHANNEL_FOLDER + File.separator + id + File.separator + FileConstant.PROFILE_FOLDER_NAME);
+
+        if (!Files.exists(folder)) {
+            Files.createDirectories(folder);
+        }else{
+            File file = folder.toFile();
+            FileUtils.cleanDirectory(file);
+        }
+
+        channel.setProfilePictureUrl(FileConstant.CHANNEL_FOLDER + id + File.separator + FileConstant.PROFILE_FOLDER_NAME + File.separator + profileImage.getOriginalFilename());
+
+        Files.copy(profileImage.getInputStream(),
+                folder.resolve(profileImage.getOriginalFilename()));
+
+        channelRepository.save(channel);
+
+        return "Profile picture is saved";
     }
 }
