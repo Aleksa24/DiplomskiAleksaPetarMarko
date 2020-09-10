@@ -1,12 +1,14 @@
 package com.example.app.controller;
 
 import com.example.app.dto.user.UserDto;
+import com.example.app.dto.user.UserShortDto;
 import com.example.app.http.HttpResponse;
 import com.example.app.service.UserService;
 import com.example.app.validator.user.groups.Add;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -54,14 +56,9 @@ public class UserController {
         return userService.add(userDto);
     }
 
-    @GetMapping("all_pagination")
-    public List<UserDto> findAllPagination(Pageable pageable) {
+    @GetMapping("all-pagination")
+    public Page<UserShortDto> findAllPagination(Pageable pageable) {
         return userService.findAllPagination(pageable);
-    }
-
-    @GetMapping("total_count")
-    public Long totalCount() {
-        return userService.totalCount();
     }
 
     @GetMapping("{id}/profile-picture")
