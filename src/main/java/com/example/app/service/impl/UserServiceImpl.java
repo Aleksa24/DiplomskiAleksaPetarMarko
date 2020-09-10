@@ -135,7 +135,13 @@ public class UserServiceImpl implements UserService {
                 () -> new UserNotFoundException("User with id " + id + " not found")
         );
 
-        Path folder = Paths.get(FileConstant.USER_FOLDER + id + File.separator +"profile");
+
+        System.out.println(System.getProperty("user.dir"));
+
+
+        Path folder = Paths.get(FileConstant.USER_FOLDER + File.separator + id + File.separator +"attachments");
+
+//        Path folder1 = Paths.get(ClassLoader.getSystemResource(FileConstant.USER_FOLDER + File.separator + id + File.separator + "profile").toURI());
 
         if (!Files.exists(folder)){
             Files.createDirectories(folder);
