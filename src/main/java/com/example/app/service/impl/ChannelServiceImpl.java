@@ -4,7 +4,6 @@ import com.example.app.constant.FileConstant;
 import com.example.app.dto.channel.ChannelDto;
 import com.example.app.dto.channel.ChannelShortDto;
 import com.example.app.entity.Channel;
-import com.example.app.entity.User;
 import com.example.app.entity.UserChannel;
 import com.example.app.exception.ChannelNotFoundException;
 import com.example.app.exception.user.UserNotFoundException;
@@ -78,15 +77,12 @@ public class ChannelServiceImpl implements ChannelService {
 
         File file = new File(FileConstant.ASSETS_FOLDER + pictureUrl);
 
-        if (!file.exists()) {
-            throw new FileNotFoundException("The requested file not found");
         if (!file.exists() || !file.isFile()) {
             throw new FileNotFoundException("The requested file not found");
         }
         Path path = Paths.get(file.getAbsolutePath());
 
         return new ByteArrayResource(Files.readAllBytes(path));
-
     }
 
     @Override
@@ -102,7 +98,7 @@ public class ChannelServiceImpl implements ChannelService {
 
         if (!Files.exists(folder)) {
             Files.createDirectories(folder);
-        }else{
+        } else {
             File file = folder.toFile();
             FileUtils.cleanDirectory(file);
         }
