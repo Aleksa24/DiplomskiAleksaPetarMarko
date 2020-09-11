@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -84,5 +85,23 @@ public class UserController {
         return ResponseEntity
                 .ok()
                 .body(new HttpResponse(200, HttpStatus.OK, "PROFILE_IMAGE_CHANGED", resultMessage));
+    }
+
+    @GetMapping("all-pagination-users-in-channel")
+    public Page<UserShortDto> findAllPaginationUsersInChannel(
+            @RequestParam Long channelId,
+            @RequestParam Long loggedUserId,
+            @RequestParam Integer page,
+            @RequestParam Integer size) {
+        return userService.findAllPaginationUsersInChannel(channelId, loggedUserId, PageRequest.of(page, size));
+    }
+
+    @GetMapping("all-pagination-users-not-in-channel")
+    public Page<UserShortDto> findAllByUserNotChannel(
+            @RequestParam Long channelId,
+            @RequestParam Long loggedUserId,
+            @RequestParam Integer page,
+            @RequestParam Integer size) {
+        return userService.findAllByUserNotChannel(channelId, loggedUserId, PageRequest.of(page, size));
     }
 }

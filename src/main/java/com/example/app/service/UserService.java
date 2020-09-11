@@ -32,4 +32,8 @@ public interface UserService {
     ByteArrayResource findProfilePictureById(Long id) throws IOException;
 
     String uploadProfileImage(Long id, MultipartFile profileImage) throws IOException;
+
+    Page<UserShortDto> findAllPaginationUsersInChannel(Long channelId, Long loggedUserId, Pageable pageable);
+
+    Page<UserShortDto> findAllByUserNotChannel(Long channelId, Long loggedUserId, Pageable pageable);
 }
