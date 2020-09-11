@@ -18,9 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -96,7 +94,9 @@ public class UserServiceImpl implements UserService {
                 () -> new RuntimeException("Role Not Found!")
         ));
         user.setUsername(user.getEmail());
-        user.setPassword(passwordEncoder.encode(user.getEmail()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setFirstName("First_name");
+        user.setLastName("Last_name");
         user.setDateCreated(new Date());
         user.setAccountNonExpired(true);
         user.setAccountNonLocked(true);
@@ -152,6 +152,35 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
 
         return "Profile picture is saved";
+    }
+
+    @Override
+    public void saveDefaultProfileImage(Long id) throws IOException {
+
+        Path folder = Paths.get(FileConstant.ASSETS_FOLDER + FileConstant.USER_FOLDER + File.separator + id + File.separator + FileConstant.PROFILE_FOLDER_NAME);
+
+        File defaultProfileImage = new File(FileConstant.ASSETS_FOLDER + FileConstant.DEFAULT_PROFILE_IMAGE_PATH);
+
+
+
+        if (!Files.exists(folder)) {
+            Files.createDirectories(folder);
+        }else{
+            File file = folder.toFile();
+            FileUtils.cleanDirectory(file);
+        }
+
+        User user = userRepository.findById(id).orElseThrow(
+                () -> new UserNotFoundException("User with id " + id + " not found")
+        );
+
+        user.setProfilePictureUrl(FileConstant.USER_FOLDER + id + File.separator + FileConstant.PROFILE_FOLDER_NAME + File.separator + defaultProfileImage.getName());
+
+        Files.copy(new FileInputStream(defaultProfileImage),
+                folder.resolve(defaultProfileImage.getName()));
+
+        userRepository.save(user);
+
     }
 
 }

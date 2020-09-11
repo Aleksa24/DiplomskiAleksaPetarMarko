@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -32,4 +33,6 @@ public interface UserService {
     ByteArrayResource findProfilePictureById(Long id) throws IOException;
 
     String uploadProfileImage(Long id, MultipartFile profileImage) throws IOException;
+
+    void saveDefaultProfileImage(Long id) throws IOException;
 }
