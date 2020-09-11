@@ -18,4 +18,8 @@ public class FileConstant {
                                                 "main" + File.separator +
                                                 "resources" + File.separator + "assets" + File.separator;
 
+    public static final String DEFAULT_PROFILE_IMAGE_PATH =
+            "default" + File.separator +
+            "default-user-profile-image.png";
+
 }

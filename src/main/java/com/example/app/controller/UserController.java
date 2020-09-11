@@ -3,6 +3,7 @@ package com.example.app.controller;
 import com.example.app.dto.user.UserDto;
 import com.example.app.dto.user.UserShortDto;
 import com.example.app.http.HttpResponse;
+import com.example.app.service.EmailService;
 import com.example.app.service.UserService;
 import com.example.app.validator.user.groups.Add;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,17 +20,21 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.security.SecureRandom;
 import java.util.List;
+import java.util.Random;
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
 
     private final UserService userService;
+    private final EmailService emailService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, EmailService emailService) {
         this.userService = userService;
+        this.emailService = emailService;
     }
 
     @GetMapping("find-by-username")
@@ -53,8 +58,19 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public UserDto add(@Validated(Add.class) @RequestBody UserDto userDto) {
-        return userService.add(userDto);
+    public UserDto add(@Validated(Add.class) @RequestBody UserDto userDto) throws IOException {
+        String email = userDto.getEmail();
+
+        String password = generateRandomPassword();
+        userDto.setPassword(password);
+
+        UserDto savedUserDto = userService.add(userDto);
+
+        userService.saveDefaultProfileImage(savedUserDto.getId());
+
+        emailService.sendPasswordToUserEmail(email, password);
+
+        return savedUserDto;
     }
 
     @GetMapping("all-pagination")
@@ -86,6 +102,25 @@ public class UserController {
                 .ok()
                 .body(new HttpResponse(200, HttpStatus.OK, "PROFILE_IMAGE_CHANGED", resultMessage));
     }
+
+    private String generateRandomPassword() {
+        int leftLimit = 33;
+        int rightLimit = 122;
+        int targetStringLength = 10;
+        Random random = new SecureRandom();
+
+        String generatedString = random.ints(leftLimit, rightLimit + 1)
+                .limit(targetStringLength)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
+
+        System.out.println(generatedString);
+
+        return generatedString;
+    }
+
+
+
 
     @GetMapping("all-pagination-users-in-channel")
     public Page<UserShortDto> findAllPaginationUsersInChannel(
