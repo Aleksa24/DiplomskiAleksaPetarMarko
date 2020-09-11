@@ -2,6 +2,7 @@ package com.example.app.controller;
 
 import com.example.app.dto.channel.ChannelDto;
 import com.example.app.dto.channel.ChannelShortDto;
+import com.example.app.http.HttpResponse;
 import com.example.app.service.ChannelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -12,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
@@ -57,6 +59,20 @@ public class ChannelController {
                 .contentLength(resource.contentLength())
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
                 .body(resource);
+    }
+
+    @PostMapping("/upload-profile-image")
+    public ResponseEntity<HttpResponse> uploadProfileImage(
+            @RequestParam MultipartFile profileImage,
+            @RequestParam Long id
+    ) throws IOException {
+
+
+        String resultMessage = channelService.uploadProfileImage(id, profileImage);
+
+        return ResponseEntity
+                .ok()
+                .body(new HttpResponse(200, HttpStatus.OK, "PROFILE_IMAGE_CHANGED", resultMessage));
     }
 
     @GetMapping("find-by-name")

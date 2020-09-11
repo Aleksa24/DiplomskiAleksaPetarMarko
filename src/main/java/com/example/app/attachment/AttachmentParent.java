@@ -56,36 +56,34 @@ public enum AttachmentParent {
     public AttachmentUploadDataDto createAttachmentUploadData(Long parentId, MultipartFile file){
         AttachmentUploadDataDto result = createAttachmentUploadDataWithParentId(parentId);
 
-        Path folder = Paths.get(getFolderPath() + parentId + File.separator +"attachments");
-        result.setFileCreationPath(folder.resolve(file.getOriginalFilename()).toAbsolutePath().toString());
+        result.setFileCreationPath(getAttachmentRelativeFilePathByParentIdAndFileName(parentId, file.getOriginalFilename()));
         result.setOriginalFileName(file.getOriginalFilename());
 
         return result;
     }
 
     public void createFolderIfAbsent(Long parentId) throws IOException {
-        Path folder = Paths.get(getFolderPath() + parentId + File.separator +"attachments");
+        Path folder = Paths.get(getAttachmentsFolderPathByParentId(parentId));
         if (!Files.exists(folder)){
             Files.createDirectories(folder);
         }
     }
 
     public void checkIfFileExists(Long parentId, MultipartFile file) throws FileAlreadyExistsException {
-        Path folder = Paths.get(getFolderPath() + parentId + File.separator +"attachments");
+        Path folder = Paths.get(getAttachmentsFolderPathByParentId(parentId));
         if (Files.exists(folder.resolve(file.getOriginalFilename()))) {
             throw new FileAlreadyExistsException("Fajl " + file.getOriginalFilename() + " vec postoji!!!");
         }
     }
 
     public void copyFileToDestination(Long parentId, MultipartFile file) throws IOException {
-        Path folder = Paths.get(getFolderPath() + parentId + File.separator +"attachments");
+        Path folder = Paths.get(getAttachmentsFolderPathByParentId(parentId));
         Files.copy(file.getInputStream(),
                 folder.resolve(file.getOriginalFilename()));
     }
 
     public ByteArrayResource findFileByParentIdAndFileName(Long parentId, String fileName) throws IOException {
-        System.out.println(getFolderPath() + parentId + File.separator +"attachments" + File.separator + fileName);
-        File file = new File(getFolderPath() + parentId + File.separator +"attachments" + File.separator + fileName);
+        File file = new File(getAttachmentFilePathByParentIdAndFileName(parentId, fileName));
         if(!file.exists()){
             throw new FileNotFoundException("Requested file not found");
         }
@@ -97,10 +95,22 @@ public enum AttachmentParent {
     }
 
     public void deleteFile(Long parentId, String fileName){
-        File file = new File(getFolderPath() + parentId + File.separator +"attachments" + File.separator + fileName);
+        File file = new File(getAttachmentFilePathByParentIdAndFileName(parentId, fileName));
         boolean deleteSignal = file.delete();
         if(!deleteSignal){
             throw new RuntimeException("File not deleted."); // TODO: Attachment not deleted exception
         }
+    }
+
+    private String getAttachmentFilePathByParentIdAndFileName(Long parentId, String fileName){
+        return ASSETS_FOLDER + getFolderPath() + parentId + File.separator + ATTACHMENTS_FOLDER_NAME + File.separator + fileName;
+    }
+
+    private String getAttachmentRelativeFilePathByParentIdAndFileName(Long parentId, String fileName){
+        return getFolderPath() + parentId + File.separator + ATTACHMENTS_FOLDER_NAME + File.separator + fileName;
+    }
+
+    private String getAttachmentsFolderPathByParentId(Long parentId){
+        return ASSETS_FOLDER + getFolderPath() + parentId + File.separator + ATTACHMENTS_FOLDER_NAME;
     }
 }
