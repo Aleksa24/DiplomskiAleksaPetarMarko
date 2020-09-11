@@ -1,5 +1,6 @@
 package com.example.app.dto.post;
 
+import com.example.app.dto.Searchable;
 import com.example.app.dto.channel.ChannelShortDto;
 import com.example.app.dto.user.UserShortDto;
 import lombok.AllArgsConstructor;
@@ -11,7 +12,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PostShortDto {
+public class PostShortDto implements Searchable {
 
     private Long id;
     private String title;

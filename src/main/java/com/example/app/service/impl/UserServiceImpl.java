@@ -6,6 +6,7 @@ import com.example.app.dto.user.UserShortDto;
 import com.example.app.entity.User;
 import com.example.app.exception.user.UserNotFoundException;
 import com.example.app.mapper.UserMapper;
+import com.example.app.repository.UserChannelRepository;
 import com.example.app.repository.UserRepository;
 import com.example.app.repository.UserRoleRepository;
 import com.example.app.service.UserService;
@@ -34,16 +35,18 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
     private final UserRoleRepository userRoleRepository;
+    private final UserChannelRepository userChannelRepository;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository,
                            UserMapper userMapper,
                            PasswordEncoder passwordEncoder,
-                           UserRoleRepository userRoleRepository) {
+                           UserRoleRepository userRoleRepository, UserChannelRepository userChannelRepository) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.passwordEncoder = passwordEncoder;
         this.userRoleRepository = userRoleRepository;
+        this.userChannelRepository = userChannelRepository;
     }
 
     @Override
@@ -139,7 +142,7 @@ public class UserServiceImpl implements UserService {
 
         if (!Files.exists(folder)) {
             Files.createDirectories(folder);
-        }else{
+        } else {
             File file = folder.toFile();
             FileUtils.cleanDirectory(file);
         }
@@ -183,4 +186,15 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Override
+    public Page<UserShortDto> findAllPaginationUsersInChannel(Long channelId, Long loggedUserId, Pageable pageable) {
+        return userChannelRepository.findAllByUserInChannel(channelId, loggedUserId, pageable)
+                .map(userChannel -> userMapper.toShortDto(userChannel.getUser()));
+    }
+
+    @Override
+    public Page<UserShortDto> findAllByUserNotChannel(Long channelId, Long loggedUserId, Pageable pageable) {
+        return userChannelRepository.findAllByUserNotChannel(channelId, loggedUserId, pageable)
+                .map(userChannel -> userMapper.toShortDto(userChannel.getUser()));
+    }
 }

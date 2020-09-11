@@ -17,7 +17,5 @@ public class CommentShortDto {
     private Date dateLastModified;
     private UserShortDto user;
     private CommentStatusDto commentStatus;
-//    private List<LikeDto> likes;
-//    private List<AttachmentDto> attachments;
 
 }
