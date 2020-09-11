@@ -1,4 +1,4 @@
-package com.example.app.validator.user.email;
+package com.example.app.validator.channel.name;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -9,12 +9,12 @@ import java.lang.annotation.Target;
 
 import static com.example.app.constant.ErrorMessageConstant.*;
 
-@Constraint(validatedBy = EmailNotTakenValidator.class)
+@Constraint(validatedBy = ChannelNameNotTakenValidator.class)
 @Target({ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface EmailNotTaken {
+public @interface ChannelNameNotTaken {
 
-    String message() default EMAIL_TAKEN;
+    String message() default CHANNEL_NAME_TAKEN;
 
     Class<?>[] groups() default {};
 

@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static com.example.app.constant.ExceptionConstant.CHANNEL_NOT_FOUND_BY_NAME;
+
 @Service
 public class ChannelServiceImpl implements ChannelService {
 
@@ -70,11 +72,17 @@ public class ChannelServiceImpl implements ChannelService {
 
         File file = new File(pictureUrl);
 
-        if (!file.exists()){
-           throw new FileNotFoundException("The requested file not found");
+        if (!file.exists()) {
+            throw new FileNotFoundException("The requested file not found");
         }
         Path path = Paths.get(file.getAbsolutePath());
 
         return new ByteArrayResource(Files.readAllBytes(path));
+    }
+
+    @Override
+    public ChannelDto findByName(String name) {
+        return channelMapper.toDto(channelRepository.findByName(name)
+                .orElseThrow(() -> new ChannelNotFoundException(String.format(CHANNEL_NOT_FOUND_BY_NAME, name))));
     }
 }

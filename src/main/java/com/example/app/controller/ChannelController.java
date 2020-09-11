@@ -6,12 +6,16 @@ import com.example.app.service.ChannelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.io.IOException;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("/channel")
@@ -25,23 +29,23 @@ public class ChannelController {
     }
 
     @GetMapping("/all")
-    public List<ChannelShortDto> findAll(){
-        return  channelService.findAll();
+    public List<ChannelShortDto> findAll() {
+        return channelService.findAll();
     }
 
     @GetMapping("/{id}")
-    public ChannelDto getById(@PathVariable("id") Long id){
-        return  channelService.findById(id);
+    public ChannelDto getById(@PathVariable("id") Long id) {
+        return channelService.findById(id);
     }
 
     @PostMapping("/save")
-    public ChannelDto save(@RequestBody ChannelDto channelDto){
+    public ChannelDto save(@Valid @RequestBody ChannelDto channelDto) {
         return channelService.save(channelDto);
     }
 
     @GetMapping("/findAllByUserId")
-    public List<ChannelShortDto> findAllByUserId(@RequestParam("id") Long id){
-        return  channelService.findAllByUserId(id);
+    public List<ChannelShortDto> findAllByUserId(@RequestParam("id") Long id) {
+        return channelService.findAllByUserId(id);
     }
 
     @GetMapping("{id}/profile-picture")
@@ -53,5 +57,27 @@ public class ChannelController {
                 .contentLength(resource.contentLength())
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
                 .body(resource);
+    }
+
+    @GetMapping("find-by-name")
+    public ChannelDto findByName(@RequestParam("name") String name) {
+        return channelService.findByName(name);
+    }
+
+    @ExceptionHandler({MethodArgumentNotValidException.class}) // TODO not working inside @RestControllerAdvice
+    public ResponseEntity<Object> validationError(MethodArgumentNotValidException ex) {
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", new Date());
+
+        List<Map<String, String>> list = new ArrayList<>();
+        ex.getBindingResult().getFieldErrors()
+                .forEach(fieldError ->
+                        list.add(new HashMap<>() {{
+                            put(fieldError.getField(), fieldError.getDefaultMessage());
+                        }}));
+
+        body.put("error", list);
+
+        return new ResponseEntity<>(body, new HttpHeaders(), HttpStatus.BAD_REQUEST);
     }
 }
