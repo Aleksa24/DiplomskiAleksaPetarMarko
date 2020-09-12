@@ -15,6 +15,7 @@ public interface UserChannelRepository extends JpaRepository<UserChannel, Long> 
     @Query("SELECT userChannel FROM UserChannel userChannel WHERE userChannel.channel.id = ?1 and userChannel.user.id <> ?2")
     Page<UserChannel> findAllByUserInChannel(Long channelId, Long loggedUserId, Pageable pageable);
 
-    @Query("SELECT userChannel FROM UserChannel userChannel WHERE userChannel.channel.id <> ?1 and userChannel.user.id <> ?2")
+    @Query("SELECT userChannel FROM UserChannel userChannel WHERE userChannel.channel.id <> ?1 and userChannel.user.id <> ?2 group by userChannel.user")
     Page<UserChannel> findAllByUserNotChannel(Long channelId, Long loggedUserId, Pageable pageable);
+
 }
