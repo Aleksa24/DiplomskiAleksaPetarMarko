@@ -13,4 +13,7 @@ public interface ChannelRepository extends JpaRepository<Channel, Long> {
 
     @Query(value = "SELECT channel FROM Channel channel WHERE channel.name LIKE %:filterValue%")
     List<Channel> findByFilterValue(@Param("filterValue") String filterValue);
+
+    @Query("SELECT channel.id FROM Channel channel JOIN Post post ON(channel.id = post.channel.id) WHERE post.id = ?1")
+    Long findIdByPostId(Long postId);
 }

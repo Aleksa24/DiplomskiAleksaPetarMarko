@@ -96,4 +96,8 @@ public class ChannelController {
 
         return new ResponseEntity<>(body, new HttpHeaders(), HttpStatus.BAD_REQUEST);
     }
+    @GetMapping("/find-id-by-post-id")
+    public Long findIdByPostId(@RequestParam("postId") Long postId){
+        return channelService.findIdByPostId(postId);
+    }
 }

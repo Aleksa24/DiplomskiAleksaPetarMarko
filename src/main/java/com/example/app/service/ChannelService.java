@@ -23,4 +23,6 @@ public interface ChannelService {
     String uploadProfileImage(Long id, MultipartFile profileImage) throws IOException;
 
     ChannelDto findByName(String name);
+
+    Long findIdByPostId(Long postId);
 }

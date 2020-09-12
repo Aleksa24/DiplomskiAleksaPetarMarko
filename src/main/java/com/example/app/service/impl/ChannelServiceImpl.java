@@ -118,4 +118,9 @@ public class ChannelServiceImpl implements ChannelService {
         return channelMapper.toDto(channelRepository.findByName(name)
                 .orElseThrow(() -> new ChannelNotFoundException(String.format(CHANNEL_NOT_FOUND_BY_NAME, name))));
     }
+
+    @Override
+    public Long findIdByPostId(Long postId) {
+        return channelRepository.findIdByPostId(postId);
+    }
 }
