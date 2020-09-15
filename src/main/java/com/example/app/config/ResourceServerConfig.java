@@ -20,6 +20,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests().mvcMatchers("/channel/all").hasAuthority("read");
+                .authorizeRequests()
+                .mvcMatchers("/channel/*").hasAuthority("read")
+                .mvcMatchers("user/all").hasAuthority("write");
     }
 }
