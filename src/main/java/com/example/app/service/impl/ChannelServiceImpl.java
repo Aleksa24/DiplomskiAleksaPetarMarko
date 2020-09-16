@@ -123,4 +123,10 @@ public class ChannelServiceImpl implements ChannelService {
     public Long findIdByPostId(Long postId) {
         return channelRepository.findIdByPostId(postId);
     }
+
+    @Override
+    public boolean isUserInChannel(Long userId,Long channelId) {
+        UserChannel userChannel = userChannelRepository.findByUserIdAndChannelId(userId, channelId);
+        return userChannel != null;
+    }
 }

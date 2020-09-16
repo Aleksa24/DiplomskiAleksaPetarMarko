@@ -25,4 +25,6 @@ public interface ChannelService {
     ChannelDto findByName(String name);
 
     Long findIdByPostId(Long postId);
+
+    boolean isUserInChannel(Long userId,Long channelId);
 }

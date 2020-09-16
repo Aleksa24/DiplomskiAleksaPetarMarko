@@ -100,4 +100,8 @@ public class ChannelController {
     public Long findIdByPostId(@RequestParam("postId") Long postId){
         return channelService.findIdByPostId(postId);
     }
+    @GetMapping("/is-user-in-channel")
+    public boolean isUserInChannel(@RequestParam("userId") Long userId,@RequestParam("channelId") Long channelId){
+        return channelService.isUserInChannel(userId,channelId);
+    }
 }
