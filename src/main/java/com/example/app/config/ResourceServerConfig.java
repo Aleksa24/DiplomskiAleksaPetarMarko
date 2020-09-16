@@ -21,7 +21,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .mvcMatchers("/channel/*").hasAuthority("read")
-                .mvcMatchers("user/all").hasAuthority("write");
+                .mvcMatchers("/channel/save").hasAuthority("channel:write")
+                .mvcMatchers("/user/add").hasAuthority("user:write");
     }
 }
