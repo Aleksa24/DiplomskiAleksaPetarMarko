@@ -43,13 +43,13 @@ public class SearchableServiceImpl implements SearchableService {
     }
 
     @Override
-    public List<Searchable> getChannelsAndPosts(String filterValue) {
+    public List<Searchable> getChannelsAndPosts(String filterValue,Long userId) {
         List<Searchable> searchableList = new ArrayList<>();
-        List<ChannelShortDto> channelShortDtoList = channelRepository.findByFilterValue(filterValue)
+        List<ChannelShortDto> channelShortDtoList = channelRepository.findByFilterValue(filterValue,userId)
                 .stream()
                 .map(channelMapper::toShortDto)
                 .collect(Collectors.toList());
-        List<PostShortDto> postShortDtoList = postRepository.findByFilterValue(filterValue)
+        List<PostShortDto> postShortDtoList = postRepository.findByFilterValue(filterValue,userId)
                 .stream()
                 .map(postMapper::toShortDto)
                 .collect(Collectors.toList());

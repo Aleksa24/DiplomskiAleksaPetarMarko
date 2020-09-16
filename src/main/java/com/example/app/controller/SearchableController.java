@@ -19,7 +19,7 @@ public class SearchableController {
     }
 
     @GetMapping("/channels-and-posts")
-    public List<Searchable> getChannelsAndPosts(@RequestParam(value = "filterValue") String filterValue){
-        return searchableService.getChannelsAndPosts(filterValue);
+    public List<Searchable> getChannelsAndPosts(@RequestParam("filterValue") String filterValue,@RequestParam("userId")Long userId){
+        return searchableService.getChannelsAndPosts(filterValue,userId);
     }
 }

@@ -33,15 +33,15 @@ public class Channel {
     @CreatedDate
     private Date dateCreated;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "channel_status_id")
     private ChannelStatus channelStatus;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "communication_direction_id")
     private CommunicationDirection communicationDirection;
 

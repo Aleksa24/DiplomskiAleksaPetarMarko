@@ -5,5 +5,5 @@ import com.example.app.dto.Searchable;
 import java.util.List;
 
 public interface SearchableService {
-    List<Searchable> getChannelsAndPosts(String filterValue);
+    List<Searchable> getChannelsAndPosts(String filterValue,Long userId);
 }
