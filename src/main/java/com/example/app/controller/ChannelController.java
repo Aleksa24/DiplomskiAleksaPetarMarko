@@ -129,4 +129,10 @@ public class ChannelController {
     public UserChannelDto saveUserChannel(@RequestBody UserChannel userChannel) {
         return channelService.saveUserChannel(userChannel);
     }
+
+    @DeleteMapping("delete-user-channel")
+    public UserChannelDto deleteUserChannel(@RequestParam Long userId,
+                                            @RequestParam Long channelId) {
+        return channelService.deleteUserChannel(userId, channelId);
+    }
 }

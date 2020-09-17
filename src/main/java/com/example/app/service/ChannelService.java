@@ -33,4 +33,6 @@ public interface ChannelService {
     List<ChannelShortDto> findAllByChannelAndUser(Long channelId, Long userId);
 
     UserChannelDto saveUserChannel(UserChannel userChannel);
+
+    UserChannelDto deleteUserChannel(Long userId, Long channelId);
 }

@@ -37,12 +37,6 @@ public class AttachmentServiceImpl implements AttachmentService {
         this.commentRepository = commentRepository;
     }
 
-
-
-
-
-
-
     @Override
     public AttachmentDto add(AttachmentUploadDataDto attachmentUploadDataDto) throws IOException {
         Post post = attachmentUploadDataDto.getPostId() != null ? postRepository.findById(attachmentUploadDataDto.getPostId()).orElseThrow() : null;
@@ -97,5 +91,5 @@ public class AttachmentServiceImpl implements AttachmentService {
     @Override
     public AttachmentDto findById(Long id) {
         return attachmentMapper.toDto(attachmentRepository.findById(id).orElseThrow()); // TODO add exception
-     }
+    }
 }

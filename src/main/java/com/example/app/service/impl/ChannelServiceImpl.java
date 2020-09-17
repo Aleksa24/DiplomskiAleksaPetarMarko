@@ -145,4 +145,11 @@ public class ChannelServiceImpl implements ChannelService {
     public UserChannelDto saveUserChannel(UserChannel userChannel) {
         return channelMapper.toUserChanelDto(userChannelRepository.save(userChannel));
     }
+
+    @Override
+    public UserChannelDto deleteUserChannel(Long userId, Long channelId) {
+        UserChannel userChannel = userChannelRepository.findByUserIdAndChannelId(userId, channelId);
+        userChannelRepository.deleteById(userChannel.getId());
+        return null;
+    }
 }
