@@ -125,8 +125,18 @@ public class ChannelServiceImpl implements ChannelService {
     }
 
     @Override
-    public boolean isUserInChannel(Long userId,Long channelId) {
+    public boolean isUserInChannel(Long userId, Long channelId) {
         UserChannel userChannel = userChannelRepository.findByUserIdAndChannelId(userId, channelId);
         return userChannel != null;
+    }
+
+    @Override
+    public List<ChannelShortDto> findAllByChannelAndUser(Long channelId, Long userId) {
+        List<UserChannel> userChannels = userChannelRepository.findAllByUserId(userId);
+        return channelMapper.toShortDtoList(userChannels.stream()
+                .flatMap(userChannel -> Stream.of(userChannel.getChannel()))
+                .filter(channel -> channel.getParentChannel() != null)
+                .filter(channel -> channel.getParentChannel().getId().equals(channelId))
+                .collect(Collectors.toList()));
     }
 }

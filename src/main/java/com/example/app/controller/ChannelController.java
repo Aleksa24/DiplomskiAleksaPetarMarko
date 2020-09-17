@@ -96,12 +96,21 @@ public class ChannelController {
 
         return new ResponseEntity<>(body, new HttpHeaders(), HttpStatus.BAD_REQUEST);
     }
+
     @GetMapping("/find-id-by-post-id")
-    public Long findIdByPostId(@RequestParam("postId") Long postId){
+    public Long findIdByPostId(@RequestParam("postId") Long postId) {
         return channelService.findIdByPostId(postId);
     }
+
     @GetMapping("/is-user-in-channel")
-    public boolean isUserInChannel(@RequestParam("userId") Long userId,@RequestParam("channelId") Long channelId){
-        return channelService.isUserInChannel(userId,channelId);
+    public boolean isUserInChannel(@RequestParam("userId") Long userId, @RequestParam("channelId") Long channelId) {
+        return channelService.isUserInChannel(userId, channelId);
+    }
+
+    @GetMapping("find-all-by-channel-and-user")
+    public List<ChannelShortDto> findAllByChannelAndUser(
+            @RequestParam("channelId") Long channelId,
+            @RequestParam("userId") Long userId) {
+        return channelService.findAllByChannelAndUser(channelId, userId);
     }
 }

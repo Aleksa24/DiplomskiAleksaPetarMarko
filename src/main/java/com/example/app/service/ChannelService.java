@@ -27,4 +27,6 @@ public interface ChannelService {
     Long findIdByPostId(Long postId);
 
     boolean isUserInChannel(Long userId,Long channelId);
+
+    List<ChannelShortDto> findAllByChannelAndUser(Long channelId, Long userId);
 }
