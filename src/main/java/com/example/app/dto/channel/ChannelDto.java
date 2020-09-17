@@ -2,7 +2,7 @@ package com.example.app.dto.channel;
 
 import com.example.app.dto.attachment.AttachmentDto;
 import com.example.app.dto.post.PostShortDto;
-import com.example.app.validator.channel.name.ChannelNameNotTaken;
+import com.example.app.validator.channel.Channel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,10 +13,10 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Channel
 public class ChannelDto {
 
     private Long id;
-    @ChannelNameNotTaken
     private String name;
     private Date dateCreated;
     private CategoryDto category;

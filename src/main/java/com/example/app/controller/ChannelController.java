@@ -4,6 +4,7 @@ import com.example.app.dto.channel.ChannelDto;
 import com.example.app.dto.channel.ChannelShortDto;
 import com.example.app.http.HttpResponse;
 import com.example.app.service.ChannelService;
+import com.example.app.util.ValidatorWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -85,14 +86,15 @@ public class ChannelController {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", new Date());
 
-        List<Map<String, String>> list = new ArrayList<>();
+        List<ValidatorWrapper> validatorWrappers = new ArrayList<>();
+        ex.getBindingResult().getGlobalErrors()
+                .forEach(objectError -> validatorWrappers.add(new ValidatorWrapper("global", objectError.getDefaultMessage())));
+
         ex.getBindingResult().getFieldErrors()
                 .forEach(fieldError ->
-                        list.add(new HashMap<>() {{
-                            put(fieldError.getField(), fieldError.getDefaultMessage());
-                        }}));
+                        validatorWrappers.add(new ValidatorWrapper(fieldError.getField(), fieldError.getDefaultMessage())));
 
-        body.put("error", list);
+        body.put("error", validatorWrappers);
 
         return new ResponseEntity<>(body, new HttpHeaders(), HttpStatus.BAD_REQUEST);
     }
