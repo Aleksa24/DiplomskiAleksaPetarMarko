@@ -5,6 +5,8 @@ import com.example.app.dto.channel.ChannelShortDto;
 import com.example.app.http.HttpResponse;
 import com.example.app.service.ChannelService;
 import com.example.app.util.ValidatorWrapper;
+import com.example.app.validator.channel.groups.Edit;
+import com.example.app.validator.channel.groups.Save;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -12,11 +14,11 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
 import java.io.IOException;
 import java.util.*;
 
@@ -42,7 +44,12 @@ public class ChannelController {
     }
 
     @PostMapping("/save")
-    public ChannelDto save(@Valid @RequestBody ChannelDto channelDto) {
+    public ChannelDto save(@Validated(Save.class) @RequestBody ChannelDto channelDto) {
+        return channelService.save(channelDto);
+    }
+
+    @PostMapping("/edit")
+    public ChannelDto edit(@Validated(Edit.class) @RequestBody ChannelDto channelDto) {
         return channelService.save(channelDto);
     }
 
