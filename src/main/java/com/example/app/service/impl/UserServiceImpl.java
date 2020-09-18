@@ -1,11 +1,15 @@
 package com.example.app.service.impl;
 
 import com.example.app.constant.FileConstant;
+import com.example.app.dto.AccountVerificationRequest;
 import com.example.app.dto.user.UserDto;
 import com.example.app.dto.user.UserShortDto;
+import com.example.app.entity.AccountActivationToken;
 import com.example.app.entity.User;
+import com.example.app.exception.user.InvalidAccountActivationTokenException;
 import com.example.app.exception.user.UserNotFoundException;
 import com.example.app.mapper.UserMapper;
+import com.example.app.repository.AccountActivationTokenRepository;
 import com.example.app.repository.UserChannelRepository;
 import com.example.app.repository.UserRepository;
 import com.example.app.repository.UserRoleRepository;
@@ -17,12 +21,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.List;
 
@@ -36,17 +42,19 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRoleRepository userRoleRepository;
     private final UserChannelRepository userChannelRepository;
+    private final AccountActivationTokenRepository accountActivationTokenRepository;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository,
                            UserMapper userMapper,
                            PasswordEncoder passwordEncoder,
-                           UserRoleRepository userRoleRepository, UserChannelRepository userChannelRepository) {
+                           UserRoleRepository userRoleRepository, UserChannelRepository userChannelRepository, AccountActivationTokenRepository accountActivationTokenRepository) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.passwordEncoder = passwordEncoder;
         this.userRoleRepository = userRoleRepository;
         this.userChannelRepository = userChannelRepository;
+        this.accountActivationTokenRepository = accountActivationTokenRepository;
     }
 
     @Override
@@ -62,7 +70,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto save(UserDto userDto) {
+    public UserDto save(@Validated UserDto userDto) {
         User user = userMapper.toEntity(userDto);
         user.setProfilePictureUrl(userRepository.findById(userDto.getId()).orElseThrow(
                 () -> new UserNotFoundException("User with id " + userDto.getId() + " not found")
@@ -196,5 +204,31 @@ public class UserServiceImpl implements UserService {
     public Page<UserShortDto> findAllByUserNotChannel(Long channelId, Long loggedUserId, Pageable pageable) {
         return userChannelRepository.findAllByUserNotChannel(channelId, loggedUserId, pageable)
                 .map(userChannel -> userMapper.toShortDto(userChannel.getUser()));
+    }
+
+    @Override
+    public boolean verifyActivationToken(AccountVerificationRequest accountVerificationRequest) throws NoSuchAlgorithmException {
+        Long id = accountVerificationRequest.getUserId();
+        String token  = accountVerificationRequest.getToken();
+
+        AccountActivationToken accountActivationToken = accountActivationTokenRepository
+                .findByUserIdAndToken(id, token).orElseThrow(
+                        () ->  new InvalidAccountActivationTokenException("The passed token is used or does not exist.")
+                );
+
+        return true;
+    }
+
+    @Override
+    public void deleteActivationToken(AccountVerificationRequest accountVerificationRequest) {
+        Long id = accountVerificationRequest.getUserId();
+        String token  = accountVerificationRequest.getToken();
+
+        AccountActivationToken accountActivationToken = accountActivationTokenRepository
+                .findByUserIdAndToken(id, token).orElseThrow(
+                        () ->  new InvalidAccountActivationTokenException("The passed token is used or does not exist.")
+                );
+
+        accountActivationTokenRepository.delete(accountActivationToken);
     }
 }

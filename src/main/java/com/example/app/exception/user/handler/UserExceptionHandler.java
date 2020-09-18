@@ -1,5 +1,6 @@
 package com.example.app.exception.user.handler;
 
+import com.example.app.exception.user.InvalidAccountActivationTokenException;
 import com.example.app.exception.user.UserNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -15,5 +16,10 @@ public class UserExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler({UserNotFoundException.class})
     public ResponseEntity<Object> internalServerErrorException(Exception e, WebRequest webRequest) {
         return handleExceptionInternal(e, e.getMessage(), new HttpHeaders(), HttpStatus.OK, webRequest);
+    }
+
+    @ExceptionHandler({InvalidAccountActivationTokenException.class})
+    public ResponseEntity<Object> handleTokenException(Exception e, WebRequest webRequest) {
+        return handleExceptionInternal(e, e.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST, webRequest);
     }
 }

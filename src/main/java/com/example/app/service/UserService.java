@@ -1,15 +1,18 @@
 package com.example.app.service;
 
 
+import com.example.app.dto.AccountVerificationRequest;
 import com.example.app.dto.user.UserDto;
 import com.example.app.dto.user.UserShortDto;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 public interface UserService {
@@ -18,7 +21,7 @@ public interface UserService {
 
     List<UserDto> findAll();
 
-    UserDto save(UserDto userDto);
+    UserDto save(@Validated UserDto userDto);
 
     UserDto deleteById(Long id);
 
@@ -39,4 +42,8 @@ public interface UserService {
     Page<UserShortDto> findAllPaginationUsersInChannel(Long channelId, Long loggedUserId, Pageable pageable);
 
     Page<UserShortDto> findAllByUserNotChannel(Long channelId, Long loggedUserId, Pageable pageable);
+
+    boolean verifyActivationToken(AccountVerificationRequest accountVerificationRequest) throws NoSuchAlgorithmException;
+
+    void deleteActivationToken(AccountVerificationRequest accountVerificationRequest);
 }

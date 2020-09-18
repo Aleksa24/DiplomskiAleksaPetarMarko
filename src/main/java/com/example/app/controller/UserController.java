@@ -1,5 +1,7 @@
 package com.example.app.controller;
 
+import com.example.app.dto.AccountVerificationRequest;
+import com.example.app.dto.MakeAccountRequestDto;
 import com.example.app.dto.user.UserDto;
 import com.example.app.dto.user.UserShortDto;
 import com.example.app.http.HttpResponse;
@@ -19,7 +21,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.mail.MessagingException;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.List;
 import java.util.Random;
@@ -47,28 +51,29 @@ public class UserController {
         return userService.findById(id);
     }
 
+
     @PostMapping("/save")
     public UserDto save(@Validated @RequestBody UserDto userDto) {
         return userService.save(userDto);
     }
-
     @GetMapping("/all")
     public List<UserDto> findAll() {
         return userService.findAll();
     }
 
     @PostMapping("/add")
-    public UserDto add(@Validated(Add.class) @RequestBody UserDto userDto) throws IOException {
-        String email = userDto.getEmail();
+    public UserDto add(@Validated(Add.class) @RequestBody UserDto userDto) throws IOException, NoSuchAlgorithmException, MessagingException {
 
         String password = generateRandomPassword();
-        userDto.setPassword(password);
+        userDto.setPassword(password); // dummy password
 
         UserDto savedUserDto = userService.add(userDto);
 
         userService.saveDefaultProfileImage(savedUserDto.getId());
 
-        emailService.sendPasswordToUserEmail(email, password);
+//        emailService.sendPasswordToUserEmail(email, password);
+
+        emailService.sendAccountActivationLinkToUserEmail(savedUserDto);
 
         return savedUserDto;
     }
@@ -114,7 +119,6 @@ public class UserController {
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
 
-        System.out.println(generatedString);
 
         return generatedString;
     }
@@ -138,5 +142,32 @@ public class UserController {
             @RequestParam Integer page,
             @RequestParam Integer size) {
         return userService.findAllByUserNotChannel(channelId, loggedUserId, PageRequest.of(page, size));
+    }
+
+    @PostMapping("verify-activation-token")
+    public ResponseEntity<UserDto> findProfilePictureById(@RequestBody AccountVerificationRequest accountVerificationRequest) throws IOException, NoSuchAlgorithmException {
+
+        userService.verifyActivationToken(accountVerificationRequest);
+        UserDto result = userService.findById(accountVerificationRequest.getUserId());
+
+        return ResponseEntity.ok()
+                .body(result);
+    }
+
+    @PostMapping("make-account")
+    public ResponseEntity<UserDto> makeAccount(@RequestBody MakeAccountRequestDto makeAccountRequest) throws IOException, NoSuchAlgorithmException {
+
+        AccountVerificationRequest accountVerificationRequest = new AccountVerificationRequest();
+        accountVerificationRequest.setToken(makeAccountRequest.getToken());
+        accountVerificationRequest.setUserId(makeAccountRequest.getUser().getId());
+
+        userService.verifyActivationToken(accountVerificationRequest);
+
+        UserDto savedUser = userService.save(makeAccountRequest.getUser());
+
+        userService.deleteActivationToken(accountVerificationRequest);
+
+        return ResponseEntity.ok()
+                .body(savedUser);
     }
 }
