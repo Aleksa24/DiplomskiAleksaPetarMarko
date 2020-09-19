@@ -2,6 +2,8 @@ package com.example.app.controller;
 
 import com.example.app.dto.channel.ChannelDto;
 import com.example.app.dto.channel.ChannelShortDto;
+import com.example.app.dto.channel.UserChannelDto;
+import com.example.app.entity.UserChannel;
 import com.example.app.http.HttpResponse;
 import com.example.app.service.ChannelService;
 import com.example.app.util.ValidatorWrapper;
@@ -121,5 +123,16 @@ public class ChannelController {
             @RequestParam("channelId") Long channelId,
             @RequestParam("userId") Long userId) {
         return channelService.findAllByChannelAndUser(channelId, userId);
+    }
+
+    @PostMapping("save-user-channel")
+    public UserChannelDto saveUserChannel(@RequestBody UserChannel userChannel) {
+        return channelService.saveUserChannel(userChannel);
+    }
+
+    @DeleteMapping("delete-user-channel")
+    public UserChannelDto deleteUserChannel(@RequestParam Long userId,
+                                            @RequestParam Long channelId) {
+        return channelService.deleteUserChannel(userId, channelId);
     }
 }

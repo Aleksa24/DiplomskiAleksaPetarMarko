@@ -7,6 +7,7 @@ import com.example.app.dto.user.UserShortDto;
 import com.example.app.http.HttpResponse;
 import com.example.app.service.EmailService;
 import com.example.app.service.UserService;
+import com.example.app.util.ValidatorWrapper;
 import com.example.app.validator.user.groups.Add;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -14,10 +15,12 @@ import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,8 +28,7 @@ import javax.mail.MessagingException;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 @RestController
 @RequestMapping("/user")
@@ -124,8 +126,6 @@ public class UserController {
     }
 
 
-
-
     @GetMapping("all-pagination-users-in-channel")
     public Page<UserShortDto> findAllPaginationUsersInChannel(
             @RequestParam Long channelId,
@@ -169,5 +169,23 @@ public class UserController {
 
         return ResponseEntity.ok()
                 .body(savedUser);
+    }
+
+    @ExceptionHandler({MethodArgumentNotValidException.class}) // TODO not working inside @RestControllerAdvice
+    public ResponseEntity<Object> validationError(MethodArgumentNotValidException ex) {
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", new Date());
+
+        List<ValidatorWrapper> validatorWrappers = new ArrayList<>();
+        ex.getBindingResult().getGlobalErrors()
+                .forEach(objectError -> validatorWrappers.add(new ValidatorWrapper("global", objectError.getDefaultMessage())));
+
+        ex.getBindingResult().getFieldErrors()
+                .forEach(fieldError ->
+                        validatorWrappers.add(new ValidatorWrapper(fieldError.getField(), fieldError.getDefaultMessage())));
+
+        body.put("error", validatorWrappers);
+
+        return new ResponseEntity<>(body, new HttpHeaders(), HttpStatus.BAD_REQUEST);
     }
 }

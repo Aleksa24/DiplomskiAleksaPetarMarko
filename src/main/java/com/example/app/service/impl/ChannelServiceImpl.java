@@ -3,6 +3,7 @@ package com.example.app.service.impl;
 import com.example.app.constant.FileConstant;
 import com.example.app.dto.channel.ChannelDto;
 import com.example.app.dto.channel.ChannelShortDto;
+import com.example.app.dto.channel.UserChannelDto;
 import com.example.app.entity.Channel;
 import com.example.app.entity.UserChannel;
 import com.example.app.exception.ChannelNotFoundException;
@@ -138,5 +139,17 @@ public class ChannelServiceImpl implements ChannelService {
                 .filter(channel -> channel.getParentChannel() != null)
                 .filter(channel -> channel.getParentChannel().getId().equals(channelId))
                 .collect(Collectors.toList()));
+    }
+
+    @Override
+    public UserChannelDto saveUserChannel(UserChannel userChannel) {
+        return channelMapper.toUserChanelDto(userChannelRepository.save(userChannel));
+    }
+
+    @Override
+    public UserChannelDto deleteUserChannel(Long userId, Long channelId) {
+        UserChannel userChannel = userChannelRepository.findByUserIdAndChannelId(userId, channelId);
+        userChannelRepository.deleteById(userChannel.getId());
+        return null;
     }
 }

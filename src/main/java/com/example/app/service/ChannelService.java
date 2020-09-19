@@ -2,6 +2,8 @@ package com.example.app.service;
 
 import com.example.app.dto.channel.ChannelDto;
 import com.example.app.dto.channel.ChannelShortDto;
+import com.example.app.dto.channel.UserChannelDto;
+import com.example.app.entity.UserChannel;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,4 +31,8 @@ public interface ChannelService {
     boolean isUserInChannel(Long userId,Long channelId);
 
     List<ChannelShortDto> findAllByChannelAndUser(Long channelId, Long userId);
+
+    UserChannelDto saveUserChannel(UserChannel userChannel);
+
+    UserChannelDto deleteUserChannel(Long userId, Long channelId);
 }
